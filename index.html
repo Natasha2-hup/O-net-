@@ -1,0 +1,673 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>สื่อการเรียนรู้ออนไลน์: สนุกกับคำพ้อง ชั้น ป.๓</title>
+    <!-- Google Fonts ภาษาไทยเพื่อความสวยงามและอ่านง่ายสำหรับเด็ก -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;600;700&family=Mitr:wght@400;500&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --primary-color: #4A90E2;
+            --secondary-color: #5CBB5C;
+            --warning-color: #F0AD4E;
+            --danger-color: #D9534F;
+            --bg-color: #F4F7F6;
+            --text-color: #333333;
+            --card-bg: #FFFFFF;
+        }
+
+        * {
+            box-sizing: border-box;
+            font-family: 'Sarabun', sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.6;
+            padding-bottom: 60px;
+        }
+
+        h1, h2, h3, .nav-brand {
+            font-family: 'Mitr', sans-serif;
+        }
+
+        /* Navigation Bar */
+        nav {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        .nav-brand {
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 15px;
+        }
+
+        .nav-links li a {
+            color: white;
+            text-decoration: none;
+            padding: 8px 16px;
+            border-radius: 20px;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            font-weight: 600;
+        }
+
+        .nav-links li a:hover, .nav-links li a.active {
+            background-color: rgba(255, 255, 255, 0.2);
+            border: 1px solid white;
+        }
+
+        /* Main Container */
+        .container {
+            max-width: 1000px;
+            margin: 2rem auto;
+            padding: 0 1rem;
+        }
+
+        .page {
+            display: none;
+            animation: fadeIn 0.5s ease-in-out forwards;
+        }
+
+        .page.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Card Styles */
+        .card {
+            background: var(--card-bg);
+            border-radius: 15px;
+            padding: 2rem;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            margin-bottom: 2rem;
+        }
+
+        .jumbotron {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            text-align: center;
+            padding: 3rem 2rem;
+            border-radius: 20px;
+            margin-bottom: 2rem;
+        }
+
+        /* Forms & Buttons */
+        .btn {
+            display: inline-block;
+            background-color: var(--primary-color);
+            color: white;
+            padding: 10px 24px;
+            border: none;
+            border-radius: 25px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.2s;
+            text-decoration: none;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        .btn:hover {
+            opacity: 0.9;
+            transform: translateY(-1px);
+        }
+
+        .btn-success { background-color: var(--secondary-color); }
+        .btn-warning { background-color: var(--warning-color); }
+        
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: bold;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: border-color 0.3s;
+        }
+
+        .form-control:focus {
+            border-color: var(--primary-color);
+            outline: none;
+        }
+
+        /* Content Styles */
+        .badge {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 12px;
+            font-size: 0.85rem;
+            font-weight: bold;
+            color: white;
+            margin-bottom: 0.5rem;
+        }
+        .badge-รูป { background-color: #E94B3C; }
+        .badge-เสียง { background-color: #233DFF; }
+
+        .example-box {
+            background-color: #f8f9fa;
+            border-left: 5px solid var(--primary-color);
+            padding: 1rem;
+            margin: 1rem 0;
+            border-radius: 0 8px 8px 0;
+        }
+
+        /* Game Styles */
+        .game-area {
+            text-align: center;
+            padding: 2rem;
+            background: #fff8e7;
+            border: 3px dashed var(--warning-color);
+            border-radius: 15px;
+        }
+
+        .word-display {
+            font-size: 3rem;
+            font-weight: bold;
+            color: #333;
+            margin: 2rem 0;
+            font-family: 'Mitr', sans-serif;
+            background: #fff;
+            padding: 1rem;
+            border-radius: 10px;
+            box-shadow: inset 0 0 10px rgba(0,0,0,0.05);
+        }
+
+        .game-options {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-top: 1.5rem;
+        }
+
+        .game-score-board {
+            display: flex;
+            justify-content: space-between;
+            font-size: 1.2rem;
+            font-weight: bold;
+            margin-bottom: 1rem;
+        }
+
+        /* Table */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 1rem;
+        }
+
+        th, td {
+            padding: 12px;
+            border: 1px solid #ddd;
+            text-align: left;
+        }
+
+        th {
+            background-color: #f2f2f2;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            nav { flex-direction: column; gap: 10px; text-align: center;}
+            .nav-links { flex-direction: column; width: 100%; gap: 5px; }
+            .nav-links li a { display: block; }
+            .game-options { flex-direction: column; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Navigation Bar -->
+    <nav>
+        <div class="nav-brand">🌟 สนุกกับคำพ้อง ป.๓</div>
+        <ul class="nav-links">
+            <li><a onclick="showPage('home')" id="nav-home" class="active">หน้าแรก</a></li>
+            <li><a onclick="showPage('learn')" id="nav-learn">บทเรียนสาระพ้อง</a></li>
+            <li><a onclick="showPage('exercise')" id="nav-exercise">แบบฝึกหัดท้าทาย</a></li>
+            <li><a onclick="showPage('game')" id="nav-game">เกมล่าขุมทรัพย์คำพ้อง</a></li>
+            <li><a onclick="showPage('report')" id="nav-report">สมุดพกคะแนน</a></li>
+        </ul>
+    </nav>
+
+    <div class="container">
+        
+        <!-- PAGE 1: HOME & LOGIN -->
+        <div id="page-home" class="page active">
+            <div class="jumbotron">
+                <h1>ยินดีต้อนรับสู่ดินแดนคำพ้องภาษาไทย!</h1>
+                <p style="margin-top: 1rem; font-size: 1.2rem;">มาร่วมสนุกและเรียนรู้เรื่อง "คำพ้องรูป และ คำพ้องเสียง" ไปด้วยกันนะเด็กๆ</p>
+            </div>
+            
+            <div class="card" id="profile-setup">
+                <h2>✍️ ลงทะเบียนผู้เรียนก่อนเข้าเมืองคำพ้อง</h2>
+                <hr style="margin: 1rem 0;"><br>
+                <div class="form-group">
+                    <label for="student-name">ชื่อ - นามสกุล ของนักเรียน:</label>
+                    <input type="text" id="student-name" class="form-control" placeholder="เด็กชาย/เด็กหญิง รักเรียน">
+                </div>
+                <div class="form-group">
+                    <label for="student-no">เลขที่:</label>
+                    <input type="number" id="student-no" class="form-control" placeholder="เช่น 1">
+                </div>
+                <button onclick="saveProfile()" class="btn btn-success">🚀 เริ่มเข้าสู่บทเรียน</button>
+            </div>
+
+            <div class="card" id="profile-welcome" style="display: none;">
+                <h2>ยินดีต้อนรับกลับมา! <span id="welcome-name" style="color: var(--primary-color);"></span></h2>
+                <p>นักเรียนสามารถเลือกเรียนรู้เนื้อหา ทำแบบฝึกหัด หรือเล่นเกมจากเมนูด้านบนได้เลยครับ</p>
+                <br>
+                <button onclick="clearStorage()" class="btn btn-danger">เปลี่ยนผู้เรียน (ออกจากระบบ)</button>
+            </div>
+        </div>
+
+        <!-- PAGE 2: LEARN CONTENT -->
+        <div id="page-learn" class="page">
+            <div class="card">
+                <h2>📚 สรุปความรู้เรื่อง "คำพ้อง"</h2>
+                <p style="color: #666; margin-bottom: 1rem;">หน่วยการเรียนรู้ที่ ๓: สนุกกับคำพ้อง | วิชาภาษาไทยพื้นฐาน (ท๑๓๑๐๑)</p>
+                <hr><br>
+                
+                <h3>๑. คำพ้องรูป</h3>
+                <p>คือ คำที่ <strong>เขียนเหมือนกัน</strong> แต่ออกเสียงต่างกัน และมีความหมายต่างกันตามบริบทของประโยค</p>
+                
+                <div class="example-box">
+                    <span class="badge badge-รูป">ตัวอย่างคำพ้องรูป</span><br>
+                    <strong>"เพลา"</strong> สามารถอ่านและแปลได้ 2 แบบคือ:
+                    <ul>
+                        <li>เพ-ลา แปลว่า เวลา (เช่น ในเพลานี้มีแดดจัด)</li>
+                        <li>เพลา (ออกเสียงควบกล้ำ) แปลว่า แกนสำหรับสอดในดุมรถ (เช่น เพลารถหัก)</li>
+                    </ul>
+                    <br>
+                    <strong>"สระ"</strong> สามารถอ่านและแปลได้ 2 แบบคือ:
+                    <ul>
+                        <li>สะ แปลว่า แอ่งน้ำขนาดใหญ่ (เช่น ปลาว่ายอยู่ในสระน้ำ)</li>
+                        <li>สะ-หระ แปลว่า ตัวอักษรแทนเสียงสระ (เช่น สระ อะ สระ อา)</li>
+                    </ul>
+                </div>
+
+                <br>
+                <h3>๒. คำพ้องเสียง</h3>
+                <p>คือ คำที่ <strong>ออกเสียงเหมือนกัน</strong> แต่เขียนต่างกัน และมีความหมายต่างกัน</p>
+                
+                <div class="example-box">
+                    <span class="badge badge-เสียง">ตัวอย่างคำพ้องเสียง</span><br>
+                    <strong>[ กาล / การ ]</strong>
+                    <ul>
+                        <li>กาล แปลว่า เวลา (เช่น ในกาลข้างหน้า)</li>
+                        <li>การ แปลว่า งาน, สิ่งที่ทำ (เช่น การบ้าน, ทำงานการ)</li>
+                    </ul>
+                    <br>
+                    <strong>[ ซ่อม / ส้อม ]</strong>
+                    <ul>
+                        <li>ซ่อม แปลว่า ทำความสะอาดหรือแก้ไขสิ่งชำรุด (เช่น ซ่อมแซมมุ้งลวด)</li>
+                        <li>ส้อม แปลว่า เครื่องใช้คู่กับช้อนสำหรับจิ้มอาหาร (เช่น ใช้ช้อนส้อมทานข้าว)</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- PAGE 3: EXERCISE -->
+        <div id="page-exercise" class="page">
+            <div class="card">
+                <h2>📝 แบบฝึกหัด: สนุกคิด สนุกใช้ คำพ้องไทย</h2>
+                <p>คำชี้แจง: ให้นักเรียนเลือกคำที่ถูกต้องที่สุดเติมลงในช่องว่างของประโยคตามความหมาย</p>
+                <hr><br>
+
+                <form id="quiz-form" onsubmit="submitQuiz(event)">
+                    <!-- ข้อ 1 -->
+                    <div class="form-group">
+                        <p><strong>ข้อที่ ๑:</strong> คุณแม่ใช้ __________ ไป __________ มุ้งลวดที่ชำรุดเสียหายในห้องครัว</p>
+                        <label style="margin-top:0.5rem;"><input type="radio" name="q1" value="incorrect1"> ซ่อม / ส้อม</label><br>
+                        <label><input type="radio" name="q1" value="correct"> ส้อม / ซ่อม</label><br>
+                        <label><input type="radio" name="q1" value="incorrect2"> ซ่อม / ซ่อม</label>
+                    </div>
+                    <hr style="margin:1.5rem 0; border: 0.5px dashed #ccc;">
+
+                    <!-- ข้อ 2 -->
+                    <div class="form-group">
+                        <p><strong>ข้อที่ ๒:</strong> ใน __________ หน้า คุณพ่อมีแผนที่จะจัด __________ งานทำบุญขึ้นบ้านใหม่</p>
+                        <label style="margin-top:0.5rem;"><input type="radio" name="q2" value="correct"> กาล / การ</label><br>
+                        <label><input type="radio" name="q2" value="incorrect1"> การ / กาล</label><br>
+                        <label><input type="radio" name="q2" value="incorrect2"> กาล / กาล</label>
+                    </div>
+                    <hr style="margin:1.5rem 0; border: 0.5px dashed #ccc;">
+
+                    <!-- ข้อ 3 (ด้าน K - อธิบายลักษณะความเข้าใจ) -->
+                    <div class="form-group">
+                        <p><strong>ข้อที่ ๓:</strong> คำพ้องประเภทใดที่มีลักษณะ <strong>"เขียนเหมือนกัน แต่อ่านออกเสียงต่างกัน"</strong>?</p>
+                        <label style="margin-top:0.5rem;"><input type="radio" name="q3" value="correct"> คำพ้องรูป</label><br>
+                        <label><input type="radio" name="q3" value="incorrect"> คำพ้องเสียง</label>
+                    </div>
+                    
+                    <br>
+                    <button type="submit" class="btn btn-success">📋 ส่งแบบฝึกหัด</button>
+                </form>
+                
+                <div id="quiz-result" style="margin-top: 1.5rem; display: none;" class="example-box">
+                    <!-- แสดงผลลัพธ์ผ่าน JS -->
+                </div>
+            </div>
+        </div>
+
+        <!-- PAGE 4: GAME -->
+        <div id="page-game" class="page">
+            <div class="card">
+                <h2>🎮 เกมแยกแยะคำพ้องแสนสนุก</h2>
+                <p>คำชี้แจง: น้องๆ ป.๓ ลองดูคำที่ปรากฏตรงหน้า แล้วเลือกว่าคำนั้นคือ "คำพ้องรูป" หรือ "คำพ้องเสียง" จากบริบทตัวอย่าง</p>
+                <br>
+                
+                <div class="game-area">
+                    <div class="game-score-board">
+                        <div>คะแนนปัจจุบัน: <span id="game-score" style="color: var(--secondary-color);">0</span> คะแนน</div>
+                        <div>คะแนนสูงสุด: <span id="game-highscore" style="color: var(--warning-color);">0</span> คะแนน</div>
+                    </div>
+                    
+                    <div id="game-word-box">
+                        <div class="word-display" id="current-word">คำพ้อง?</div>
+                        <p style="color: #666; font-style: italic; margin-bottom: 1rem;" id="current-hint">คำใบ้จะปรากฏที่นี่</p>
+                    </div>
+
+                    <div class="game-options">
+                        <button onclick="checkGameAnswer('รูป')" class="btn btn-danger" style="font-size: 1.2rem; padding: 15px 30px;">🔴 คำพ้องรูป</button>
+                        <button onclick="checkGameAnswer('เสียง')" class="btn" style="background-color: #233DFF; font-size: 1.2rem; padding: 15px 30px;">🔵 คำพ้องเสียง</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- PAGE 5: REPORT / SCOREBOARD -->
+        <div id="page-report" class="page">
+            <div class="card">
+                <h2>📊 สมุดพกบันทึกผลการเรียนรู้รายบุคคล</h2>
+                <p>หน้านี้ใช้ระบบ Local Storage เพื่อจำข้อมูลของนักเรียนไว้บนเครื่องนี้โดยไม่ต้องพึ่งพาเซิร์ฟเวอร์</p>
+                <hr><br>
+                
+                <div id="report-empty">
+                    <p style="color: var(--danger-color); font-weight: bold;">⚠️ ยังไม่มีข้อมูลผู้เรียน กรุณากรอกข้อมูลในหน้าแรกก่อนนะครับ</p>
+                </div>
+
+                <div id="report-content" style="display: none;">
+                    <h3>ข้อมูลนักเรียน</h3>
+                    <table>
+                        <tr>
+                            <th width="30%">หัวข้อ</th>
+                            <th>ข้อมูล</th>
+                        </tr>
+                        <tr>
+                            <td><strong>ชื่อ-นามสกุล</strong></td>
+                            <td><span id="rep-name"></span></td>
+                        </tr>
+                        <tr>
+                            <td><strong>เลขที่</strong></td>
+                            <td><span id="rep-no"></span></td>
+                        </tr>
+                        <tr>
+                            <td><strong>คะแนนแบบฝึกหัด (ท ๔.๑)</strong></td>
+                            <td><span id="rep-quiz">ยังไม่ได้ทำ</span></td>
+                        </tr>
+                        <tr>
+                            <td><strong>คะแนนสูงสุดจากเกมคำพ้อง</strong></td>
+                            <td><span id="rep-game">0</span> คะแนน</td>
+                        </tr>
+                    </table>
+
+                    <br><br>
+                    <h3>📑 ส่วนบันทึกและประเมินเพิ่มเติม (สำหรับคุณครูประจำวิชา)</h3>
+                    <p style="font-size: 0.9rem; color: #555;">*คุณครูสามารถพิมพ์บันทึกหลังการสอนหรือข้อเสนอแนะไว้ตรงนี้ ระบบจะเซฟอัตโนมัติบนเบราว์เซอร์นี้ทันที*</p>
+                    <br>
+                    <div class="form-group">
+                        <label for="teacher-note">บันทึกผลการจัดกิจกรรม / ปัญหาอุปสรรค:</label>
+                        <textarea id="teacher-note" class="form-control" rows="4" placeholder="พิมพ์บันทึกผลการสอนตรงนี้..." oninput="saveTeacherNote()"></textarea>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        // ข้อมูลเกม
+        const gameData = [
+            { word: "เพลา", hint: "(เพ-ลา แปลว่า เวลา / เพลา แปลว่า แกนล้อรถยนต์)", type: "รูป" },
+            { word: "สระ", hint: "(สะ แปลว่า แอ่งน้ำ / สะ-หระ แปลว่า รูปสระตัวอักษร)", type: "รูป" },
+            { word: "กาล / การ", hint: "(ออกเสียงว่า กาน เหมือนกัน แต่เขียนต่างความหมายต่าง)", type: "เสียง" },
+            { word: "ซ่อม / ส้อม", hint: "(ออกเสียงว่า ซ่อม เหมือนกัน แต่เขียนต่างความหมายต่าง)", type: "เสียง" },
+            { word: "ปักเป้า", hint: "(ปัก-เป้า แปลว่า ว่าวชนิดหนึ่ง / ปัก-กะ-เป้า แปลว่า ปลาชนิดหนึ่ง)", type: "รูป" },
+            { word: "บาท / บาตร", hint: "(เงินบาท / บาตรพระ ออกเสียงเหมือนกันเป๊ะ)", type: "เสียง" }
+        ];
+
+        let currentGameIndex = 0;
+        let gameScore = 0;
+
+        // ฟังก์ชันเปลี่ยนหน้าเว็บ (SPA Single File)
+        function showPage(pageId) {
+            // ซ่อนทุกหน้า
+            document.querySelectorAll('.page').forEach(page => {
+                page.classList.remove('active');
+            });
+            // ลบสถานะ Active ของลิงก์ทั้งหมด
+            document.querySelectorAll('.nav-links a').forEach(link => {
+                link.classList.remove('active');
+            });
+
+            // แสดงหน้าที่เลือก
+            document.getElementById(`page-${pageId}`).classList.add('active');
+            // ทำไฮไลต์เมนู
+            document.getElementById(`nav-${pageId}`).classList.add('active');
+
+            // อัปเดตข้อมูลทุกครั้งเมื่อเปิดหน้ารายงาน
+            if(pageId === 'report') {
+                loadReport();
+            }
+            if(pageId === 'game') {
+                initGame();
+            }
+        }
+
+        // โหลดข้อมูลเมื่อเปิดหน้าเว็บ
+        window.onload = function() {
+            checkUserSession();
+        };
+
+        function checkUserSession() {
+            const name = localStorage.getItem('student_name');
+            const no = localStorage.getItem('student_no');
+
+            if(name && no) {
+                document.getElementById('profile-setup').style.display = 'none';
+                document.getElementById('profile-welcome').style.display = 'block';
+                document.getElementById('welcome-name').innerText = `${name} เลขที่ ${no}`;
+            } else {
+                document.getElementById('profile-setup').style.display = 'block';
+                document.getElementById('profile-welcome').style.display = 'none';
+            }
+        }
+
+        // บันทึกโปรไฟล์ลง Local Storage
+        function saveProfile() {
+            const name = document.getElementById('student-name').value.trim();
+            const no = document.getElementById('student-no').value.trim();
+
+            if(!name || !no) {
+                alert('กรุณากรอกชื่อและเลขที่ก่อนเข้าสู่บทเรียนนะครับเด็กๆ 🌟');
+                return;
+            }
+
+            localStorage.setItem('student_name', name);
+            localStorage.setItem('student_no', no);
+            
+            checkUserSession();
+            showPage('learn'); // ลิงก์พาไปหน้าบทเรียนต่อทันทีตามโมเดลการสอน
+        }
+
+        // เคลียร์ข้อมูล/ออกจากระบบ
+        function clearStorage() {
+            if(confirm('ต้องการเปลี่ยนผู้เรียนใช่หรือไม่? ข้อมูลคะแนนเดิมจะถูกล้างออกทั้งหมด')) {
+                localStorage.clear();
+                checkUserSession();
+                document.getElementById('student-name').value = '';
+                document.getElementById('student-no').value = '';
+                document.getElementById('quiz-form').reset();
+                document.getElementById('quiz-result').style.display = 'none';
+                showPage('home');
+            }
+        }
+
+        // ส่งและตรวจแบบฝึกหัด
+        function submitQuiz(event) {
+            event.preventDefault();
+            const name = localStorage.getItem('student_name');
+            if(!name) {
+                alert('กรุณาลงทะเบียนที่หน้าแรกก่อนทำแบบฝึกหัดนะครับ');
+                showPage('home');
+                return;
+            }
+
+            let score = 0;
+            const q1 = document.querySelector('input[name="q1"]:checked');
+            const q2 = document.querySelector('input[name="q2"]:checked');
+            const q3 = document.querySelector('input[name="q3"]:checked');
+
+            if(!q1 || !q2 || !q3) {
+                alert('น้องๆ ยังทำข้อสอบไม่ครบทุกข้อเลยครับ ตรวจสอบอีกครั้งนะ 😊');
+                return;
+            }
+
+            if(q1.value === 'correct') score++;
+            if(q2.value === 'correct') score++;
+            if(q3.value === 'correct') score++;
+
+            // บันทึกคะแนนลง Local Storage
+            localStorage.setItem('quiz_score', score);
+
+            // แสดงผลตรวจแบบฝึกหัด
+            const resultBox = document.getElementById('quiz-result');
+            resultBox.style.display = 'block';
+            
+            let passedText = score >= 2 ? '<span style="color:var(--secondary-color)">ผ่านเกณฑ์ขั้นต่ำ (ได้ร้อยละ ๖๐ ขึ้นไป)</span>' : '<span style="color:var(--danger-color)">ไม่ผ่านเกณฑ์ พยายามใหม่อีกครั้งนะเด็กๆ</span>';
+            
+            resultBox.innerHTML = `
+                <h4>📊 ผลการทดสอบของน้อง ${name}</h4>
+                <p>ได้คะแนนสะสม: <strong>${score} / 3</strong> คะแนน</p>
+                <p>ประเมินผล: ${passedText}</p>
+                <p style="font-size:0.9rem; color:#666; margin-top:0.5rem;">ระบบบันทึกคะแนนข้อสอบในสมุดพกเรียบร้อยแล้วจ้า!</p>
+            `;
+            
+            alert(`ทำแบบฝึกหัดเสร็จสิ้น! ได้คะแนน ${score}/3 คะแนน`);
+        }
+
+        // ระบบเกมล่าขุมทรัพย์คำพ้อง
+        function initGame() {
+            gameScore = 0;
+            document.getElementById('game-score').innerText = gameScore;
+            
+            let highscore = localStorage.getItem('game_highscore') || 0;
+            document.getElementById('game-highscore').innerText = highscore;
+            
+            currentGameIndex = 0;
+            nextGameWord();
+        }
+
+        function nextGameWord() {
+            if(currentGameIndex >= gameData.length) {
+                // วนกลับมาเริ่มต้นใหม่หากเล่นจนจบข้อมูลคลังคำ
+                currentGameIndex = 0;
+            }
+            const currentItem = gameData[currentGameIndex];
+            document.getElementById('current-word').innerText = currentItem.word;
+            document.getElementById('current-hint').innerText = currentItem.hint;
+        }
+
+        function checkGameAnswer(playerChoice) {
+            const name = localStorage.getItem('student_name');
+            if(!name) {
+                alert('กรุณาลงทะเบียนที่หน้าแรกก่อนร่วมสนุกเล่นเกมนะครับ');
+                showPage('home');
+                return;
+            }
+
+            const currentItem = gameData[currentGameIndex];
+            if(playerChoice === currentItem.type) {
+                gameScore += 10;
+                alert('🎉 เก่งมากจ้า! ตอบถูกรับไป 10 คะแนน');
+            } else {
+                alert('😢 น่ายังไม่ถูกนะจ๊ะ ลองศึกษาจากคำใบ้อีกทีน้า');
+            }
+
+            document.getElementById('game-score').innerText = gameScore;
+
+            // ตรวจสอบและบันทึกคะแนนสูงสุด (High Score) ลงคลังคอมพิวเตอร์เครื่องนี้
+            let currentHighScore = parseInt(localStorage.getItem('game_highscore') || 0);
+            if(gameScore > currentHighScore) {
+                localStorage.setItem('game_highscore', gameScore);
+                document.getElementById('game-highscore').innerText = gameScore;
+            }
+
+            currentGameIndex++;
+            nextGameWord();
+        }
+
+        // โหลดข้อมูลเข้าสู่หน้าสมุดพกผลการเรียน (Report)
+        function loadReport() {
+            const name = localStorage.getItem('student_name');
+            const no = localStorage.getItem('student_no');
+            const quizScore = localStorage.getItem('quiz_score');
+            const gameHighScore = localStorage.getItem('game_highscore') || 0;
+            const teacherNote = localStorage.getItem('teacher_note') || '';
+
+            if(name && no) {
+                document.getElementById('report-empty').style.display = 'none';
+                document.getElementById('report-content').style.display = 'block';
+
+                document.getElementById('rep-name').innerText = name;
+                document.getElementById('rep-no').innerText = no;
+                document.getElementById('rep-quiz').innerText = quizScore !== null ? `${quizScore} / 3 คะแนน` : 'ยังไม่ได้ลงมือทำแบบฝึกหัด';
+                document.getElementById('rep-game').innerText = gameHighScore;
+                document.getElementById('teacher-note').value = teacherNote;
+            } else {
+                document.getElementById('report-empty').style.display = 'block';
+                document.getElementById('report-content').style.display = 'none';
+            }
+        }
+
+        // บันทึกโน้ตของคุณครูลง Local Storage
+        function saveTeacherNote() {
+            const noteValue = document.getElementById('teacher-note').value;
+            localStorage.setItem('teacher_note', noteValue);
+        }
+    </script>
+</body>
+</html>
