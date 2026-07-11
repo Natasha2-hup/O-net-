@@ -3,670 +3,1020 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>สื่อการเรียนรู้ออนไลน์: สนุกกับคำพ้อง ชั้น ป.๓</title>
-    <!-- Google Fonts ภาษาไทยเพื่อความสวยงามและอ่านง่ายสำหรับเด็ก -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;600;700&family=Mitr:wght@400;500&display=swap" rel="stylesheet">
-    
+    <title>O-NET ม.3 Educational Analytics Dashboard</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <!-- Google Fonts (Sarabun) -->
+    <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
-        :root {
-            --primary-color: #4A90E2;
-            --secondary-color: #5CBB5C;
-            --warning-color: #F0AD4E;
-            --danger-color: #D9534F;
-            --bg-color: #F4F7F6;
-            --text-color: #333333;
-            --card-bg: #FFFFFF;
-        }
-
-        * {
-            box-sizing: border-box;
-            font-family: 'Sarabun', sans-serif;
-            margin: 0;
-            padding: 0;
-        }
-
         body {
-            background-color: var(--bg-color);
-            color: var(--text-color);
-            line-height: 1.6;
-            padding-bottom: 60px;
+            font-family: 'Sarabun', sans-serif;
         }
-
-        h1, h2, h3, .nav-brand {
-            font-family: 'Mitr', sans-serif;
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
         }
-
-        /* Navigation Bar */
-        nav {
-            background-color: var(--primary-color);
-            color: white;
-            padding: 1rem 2rem;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            position: sticky;
-            top: 0;
-            z-index: 1000;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: #f1f5f9;
         }
-
-        .nav-brand {
-            font-size: 1.5rem;
-            font-weight: bold;
-        }
-
-        .nav-links {
-            display: flex;
-            list-style: none;
-            gap: 15px;
-        }
-
-        .nav-links li a {
-            color: white;
-            text-decoration: none;
-            padding: 8px 16px;
-            border-radius: 20px;
-            transition: all 0.3s ease;
-            cursor: pointer;
-            font-weight: 600;
-        }
-
-        .nav-links li a:hover, .nav-links li a.active {
-            background-color: rgba(255, 255, 255, 0.2);
-            border: 1px solid white;
-        }
-
-        /* Main Container */
-        .container {
-            max-width: 1000px;
-            margin: 2rem auto;
-            padding: 0 1rem;
-        }
-
-        .page {
-            display: none;
-            animation: fadeIn 0.5s ease-in-out forwards;
-        }
-
-        .page.active {
-            display: block;
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        /* Card Styles */
-        .card {
-            background: var(--card-bg);
-            border-radius: 15px;
-            padding: 2rem;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
-            margin-bottom: 2rem;
-        }
-
-        .jumbotron {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            text-align: center;
-            padding: 3rem 2rem;
-            border-radius: 20px;
-            margin-bottom: 2rem;
-        }
-
-        /* Forms & Buttons */
-        .btn {
-            display: inline-block;
-            background-color: var(--primary-color);
-            color: white;
-            padding: 10px 24px;
-            border: none;
-            border-radius: 25px;
-            font-size: 1rem;
-            font-weight: 600;
-            cursor: pointer;
-            transition: background 0.2s;
-            text-decoration: none;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-        }
-
-        .btn:hover {
-            opacity: 0.9;
-            transform: translateY(-1px);
-        }
-
-        .btn-success { background-color: var(--secondary-color); }
-        .btn-warning { background-color: var(--warning-color); }
-        
-        .form-group {
-            margin-bottom: 1.5rem;
-        }
-
-        .form-group label {
-            display: block;
-            margin-bottom: 0.5rem;
-            font-weight: bold;
-        }
-
-        .form-control {
-            width: 100%;
-            padding: 12px;
-            border: 2px solid #ddd;
-            border-radius: 8px;
-            font-size: 1rem;
-            transition: border-color 0.3s;
-        }
-
-        .form-control:focus {
-            border-color: var(--primary-color);
-            outline: none;
-        }
-
-        /* Content Styles */
-        .badge {
-            display: inline-block;
-            padding: 4px 12px;
-            border-radius: 12px;
-            font-size: 0.85rem;
-            font-weight: bold;
-            color: white;
-            margin-bottom: 0.5rem;
-        }
-        .badge-รูป { background-color: #E94B3C; }
-        .badge-เสียง { background-color: #233DFF; }
-
-        .example-box {
-            background-color: #f8f9fa;
-            border-left: 5px solid var(--primary-color);
-            padding: 1rem;
-            margin: 1rem 0;
-            border-radius: 0 8px 8px 0;
-        }
-
-        /* Game Styles */
-        .game-area {
-            text-align: center;
-            padding: 2rem;
-            background: #fff8e7;
-            border: 3px dashed var(--warning-color);
-            border-radius: 15px;
-        }
-
-        .word-display {
-            font-size: 3rem;
-            font-weight: bold;
-            color: #333;
-            margin: 2rem 0;
-            font-family: 'Mitr', sans-serif;
-            background: #fff;
-            padding: 1rem;
-            border-radius: 10px;
-            box-shadow: inset 0 0 10px rgba(0,0,0,0.05);
-        }
-
-        .game-options {
-            display: flex;
-            justify-content: center;
-            gap: 20px;
-            margin-top: 1.5rem;
-        }
-
-        .game-score-board {
-            display: flex;
-            justify-content: space-between;
-            font-size: 1.2rem;
-            font-weight: bold;
-            margin-bottom: 1rem;
-        }
-
-        /* Table */
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 1rem;
-        }
-
-        th, td {
-            padding: 12px;
-            border: 1px solid #ddd;
-            text-align: left;
-        }
-
-        th {
-            background-color: #f2f2f2;
-        }
-
-        /* Responsive */
-        @media (max-width: 768px) {
-            nav { flex-direction: column; gap: 10px; text-align: center;}
-            .nav-links { flex-direction: column; width: 100%; gap: 5px; }
-            .nav-links li a { display: block; }
-            .game-options { flex-direction: column; }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
+            border-radius: 3px;
         }
     </style>
 </head>
-<body>
+<body class="bg-slate-50 text-slate-800 min-h-screen flex flex-col">
 
-    <!-- Navigation Bar -->
-    <nav>
-        <div class="nav-brand">🌟 สนุกกับคำพ้อง ป.๓</div>
-        <ul class="nav-links">
-            <li><a onclick="showPage('home')" id="nav-home" class="active">หน้าแรก</a></li>
-            <li><a onclick="showPage('learn')" id="nav-learn">บทเรียนสาระพ้อง</a></li>
-            <li><a onclick="showPage('exercise')" id="nav-exercise">แบบฝึกหัดท้าทาย</a></li>
-            <li><a onclick="showPage('game')" id="nav-game">เกมล่าขุมทรัพย์คำพ้อง</a></li>
-            <li><a onclick="showPage('report')" id="nav-report">สมุดพกคะแนน</a></li>
-        </ul>
-    </nav>
-
-    <div class="container">
-        
-        <!-- PAGE 1: HOME & LOGIN -->
-        <div id="page-home" class="page active">
-            <div class="jumbotron">
-                <h1>ยินดีต้อนรับสู่ดินแดนคำพ้องภาษาไทย!</h1>
-                <p style="margin-top: 1rem; font-size: 1.2rem;">มาร่วมสนุกและเรียนรู้เรื่อง "คำพ้องรูป และ คำพ้องเสียง" ไปด้วยกันนะเด็กๆ</p>
-            </div>
-            
-            <div class="card" id="profile-setup">
-                <h2>✍️ ลงทะเบียนผู้เรียนก่อนเข้าเมืองคำพ้อง</h2>
-                <hr style="margin: 1rem 0;"><br>
-                <div class="form-group">
-                    <label for="student-name">ชื่อ - นามสกุล ของนักเรียน:</label>
-                    <input type="text" id="student-name" class="form-control" placeholder="เด็กชาย/เด็กหญิง รักเรียน">
+    <!-- Header Navigation -->
+    <header class="bg-white border-b border-slate-200 sticky top-0 z-50 shadow-sm">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+            <div class="flex items-center space-x-3">
+                <div class="bg-indigo-600 text-white p-2 rounded-lg">
+                    <i data-lucide="graduation-cap" class="w-6 h-6"></i>
                 </div>
-                <div class="form-group">
-                    <label for="student-no">เลขที่:</label>
-                    <input type="number" id="student-no" class="form-control" placeholder="เช่น 1">
+                <div>
+                    <h1 class="text-lg font-bold text-slate-900 leading-tight">O-NET ม.3 Insights Dashboard</h1>
+                    <p class="text-xs text-slate-500">ระบบวิเคราะห์ข้อมูลผลคะแนนสอบ O-NET เชิงลึกแยกตามสังกัด</p>
                 </div>
-                <button onclick="saveProfile()" class="btn btn-success">🚀 เริ่มเข้าสู่บทเรียน</button>
             </div>
-
-            <div class="card" id="profile-welcome" style="display: none;">
-                <h2>ยินดีต้อนรับกลับมา! <span id="welcome-name" style="color: var(--primary-color);"></span></h2>
-                <p>นักเรียนสามารถเลือกเรียนรู้เนื้อหา ทำแบบฝึกหัด หรือเล่นเกมจากเมนูด้านบนได้เลยครับ</p>
-                <br>
-                <button onclick="clearStorage()" class="btn btn-danger">เปลี่ยนผู้เรียน (ออกจากระบบ)</button>
+            <div class="flex items-center space-x-3">
+                <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-indigo-50 text-indigo-700 border border-indigo-200">
+                    <span class="w-1.5 h-1.5 mr-1.5 rounded-full bg-indigo-600 animate-pulse"></span>
+                    Educational Analyst Mode
+                </span>
             </div>
         </div>
+    </header>
 
-        <!-- PAGE 2: LEARN CONTENT -->
-        <div id="page-learn" class="page">
-            <div class="card">
-                <h2>📚 สรุปความรู้เรื่อง "คำพ้อง"</h2>
-                <p style="color: #666; margin-bottom: 1rem;">หน่วยการเรียนรู้ที่ ๓: สนุกกับคำพ้อง | วิชาภาษาไทยพื้นฐาน (ท๑๓๑๐๑)</p>
-                <hr><br>
-                
-                <h3>๑. คำพ้องรูป</h3>
-                <p>คือ คำที่ <strong>เขียนเหมือนกัน</strong> แต่ออกเสียงต่างกัน และมีความหมายต่างกันตามบริบทของประโยค</p>
-                
-                <div class="example-box">
-                    <span class="badge badge-รูป">ตัวอย่างคำพ้องรูป</span><br>
-                    <strong>"เพลา"</strong> สามารถอ่านและแปลได้ 2 แบบคือ:
-                    <ul>
-                        <li>เพ-ลา แปลว่า เวลา (เช่น ในเพลานี้มีแดดจัด)</li>
-                        <li>เพลา (ออกเสียงควบกล้ำ) แปลว่า แกนสำหรับสอดในดุมรถ (เช่น เพลารถหัก)</li>
-                    </ul>
-                    <br>
-                    <strong>"สระ"</strong> สามารถอ่านและแปลได้ 2 แบบคือ:
-                    <ul>
-                        <li>สะ แปลว่า แอ่งน้ำขนาดใหญ่ (เช่น ปลาว่ายอยู่ในสระน้ำ)</li>
-                        <li>สะ-หระ แปลว่า ตัวอักษรแทนเสียงสระ (เช่น สระ อะ สระ อา)</li>
-                    </ul>
-                </div>
+    <!-- Main Content Container -->
+    <main class="flex-grow max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-6">
 
-                <br>
-                <h3>๒. คำพ้องเสียง</h3>
-                <p>คือ คำที่ <strong>ออกเสียงเหมือนกัน</strong> แต่เขียนต่างกัน และมีความหมายต่างกัน</p>
-                
-                <div class="example-box">
-                    <span class="badge badge-เสียง">ตัวอย่างคำพ้องเสียง</span><br>
-                    <strong>[ กาล / การ ]</strong>
-                    <ul>
-                        <li>กาล แปลว่า เวลา (เช่น ในกาลข้างหน้า)</li>
-                        <li>การ แปลว่า งาน, สิ่งที่ทำ (เช่น การบ้าน, ทำงานการ)</li>
-                    </ul>
-                    <br>
-                    <strong>[ ซ่อม / ส้อม ]</strong>
-                    <ul>
-                        <li>ซ่อม แปลว่า ทำความสะอาดหรือแก้ไขสิ่งชำรุด (เช่น ซ่อมแซมมุ้งลวด)</li>
-                        <li>ส้อม แปลว่า เครื่องใช้คู่กับช้อนสำหรับจิ้มอาหาร (เช่น ใช้ช้อนส้อมทานข้าว)</li>
-                    </ul>
-                </div>
+        <!-- Error / Info Banner -->
+        <div id="notificationBanner" class="hidden bg-emerald-50 border border-emerald-200 text-emerald-800 px-4 py-3 rounded-xl flex items-start space-x-3 shadow-sm transition-all duration-300">
+            <i data-lucide="info" class="w-5 h-5 text-emerald-600 flex-shrink-0 mt-0.5"></i>
+            <div class="flex-grow">
+                <p class="font-semibold text-sm" id="bannerTitle">โหลดข้อมูลสำเร็จ</p>
+                <p class="text-xs text-emerald-700 mt-0.5" id="bannerMessage">ระบบโหลดข้อมูลสถิติ O-NET เรียบร้อยแล้ว คุณสามารถใช้ตัวกรองเพื่อวิเคราะห์ข้อมูลเชิงลึกได้ทันที</p>
             </div>
+            <button onclick="hideBanner()" class="text-emerald-500 hover:text-emerald-700">
+                <i data-lucide="x" class="w-4 h-4"></i>
+            </button>
         </div>
 
-        <!-- PAGE 3: EXERCISE -->
-        <div id="page-exercise" class="page">
-            <div class="card">
-                <h2>📝 แบบฝึกหัด: สนุกคิด สนุกใช้ คำพ้องไทย</h2>
-                <p>คำชี้แจง: ให้นักเรียนเลือกคำที่ถูกต้องที่สุดเติมลงในช่องว่างของประโยคตามความหมาย</p>
-                <hr><br>
+        <!-- Dashboard Layout Grid -->
+        <div class="grid grid-cols-1 lg:grid-cols-4 gap-6">
 
-                <form id="quiz-form" onsubmit="submitQuiz(event)">
-                    <!-- ข้อ 1 -->
-                    <div class="form-group">
-                        <p><strong>ข้อที่ ๑:</strong> คุณแม่ใช้ __________ ไป __________ มุ้งลวดที่ชำรุดเสียหายในห้องครัว</p>
-                        <label style="margin-top:0.5rem;"><input type="radio" name="q1" value="incorrect1"> ซ่อม / ส้อม</label><br>
-                        <label><input type="radio" name="q1" value="correct"> ส้อม / ซ่อม</label><br>
-                        <label><input type="radio" name="q1" value="incorrect2"> ซ่อม / ซ่อม</label>
+            <!-- Sidebar Filters Area -->
+            <div class="lg:col-span-1 space-y-6">
+                <!-- Filters Card -->
+                <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm space-y-5">
+                    <div class="flex items-center justify-between border-b border-slate-100 pb-3">
+                        <div class="flex items-center space-x-2">
+                            <i data-lucide="sliders-horizontal" class="w-5 h-5 text-indigo-600"></i>
+                            <h2 class="font-bold text-slate-800 text-sm tracking-wide uppercase">เครื่องมือกรองข้อมูล</h2>
+                        </div>
+                        <button onclick="resetFilters()" class="text-xs text-indigo-600 hover:text-indigo-800 hover:underline flex items-center space-x-1">
+                            <i data-lucide="rotate-ccw" class="w-3 h-3"></i>
+                            <span>รีเซ็ต</span>
+                        </button>
                     </div>
-                    <hr style="margin:1.5rem 0; border: 0.5px dashed #ccc;">
 
-                    <!-- ข้อ 2 -->
-                    <div class="form-group">
-                        <p><strong>ข้อที่ ๒:</strong> ใน __________ หน้า คุณพ่อมีแผนที่จะจัด __________ งานทำบุญขึ้นบ้านใหม่</p>
-                        <label style="margin-top:0.5rem;"><input type="radio" name="q2" value="correct"> กาล / การ</label><br>
-                        <label><input type="radio" name="q2" value="incorrect1"> การ / กาล</label><br>
-                        <label><input type="radio" name="q2" value="incorrect2"> กาล / กาล</label>
+                    <!-- Year Slicer -->
+                    <div class="space-y-2">
+                        <label class="block text-xs font-semibold text-slate-600">ปีการศึกษา</label>
+                        <select id="filterYear" onchange="applyFilters()" class="w-full bg-slate-50 border border-slate-200 rounded-lg py-2 px-3 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 text-slate-700">
+                            <option value="ALL">แสดงทุกปีการศึกษา</option>
+                        </select>
                     </div>
-                    <hr style="margin:1.5rem 0; border: 0.5px dashed #ccc;">
 
-                    <!-- ข้อ 3 (ด้าน K - อธิบายลักษณะความเข้าใจ) -->
-                    <div class="form-group">
-                        <p><strong>ข้อที่ ๓:</strong> คำพ้องประเภทใดที่มีลักษณะ <strong>"เขียนเหมือนกัน แต่อ่านออกเสียงต่างกัน"</strong>?</p>
-                        <label style="margin-top:0.5rem;"><input type="radio" name="q3" value="correct"> คำพ้องรูป</label><br>
-                        <label><input type="radio" name="q3" value="incorrect"> คำพ้องเสียง</label>
+                    <!-- Subject Slicer -->
+                    <div class="space-y-2">
+                        <label class="block text-xs font-semibold text-slate-600">วิชาสอบ</label>
+                        <select id="filterSubject" onchange="applyFilters()" class="w-full bg-slate-50 border border-slate-200 rounded-lg py-2 px-3 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 text-slate-700">
+                            <option value="ALL">แสดงทุกวิชา</option>
+                        </select>
                     </div>
-                    
-                    <br>
-                    <button type="submit" class="btn btn-success">📋 ส่งแบบฝึกหัด</button>
-                </form>
-                
-                <div id="quiz-result" style="margin-top: 1.5rem; display: none;" class="example-box">
-                    <!-- แสดงผลลัพธ์ผ่าน JS -->
+
+                    <!-- Bureau Slicer (Multi-Select style or simple select) -->
+                    <div class="space-y-2">
+                        <label class="block text-xs font-semibold text-slate-600">หน่วยงานสังกัด</label>
+                        <select id="filterBureau" onchange="applyFilters()" class="w-full bg-slate-50 border border-slate-200 rounded-lg py-2 px-3 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 text-slate-700">
+                            <option value="ALL">แสดงทุกสังกัด</option>
+                        </select>
+                    </div>
                 </div>
-            </div>
-        </div>
 
-        <!-- PAGE 4: GAME -->
-        <div id="page-game" class="page">
-            <div class="card">
-                <h2>🎮 เกมแยกแยะคำพ้องแสนสนุก</h2>
-                <p>คำชี้แจง: น้องๆ ป.๓ ลองดูคำที่ปรากฏตรงหน้า แล้วเลือกว่าคำนั้นคือ "คำพ้องรูป" หรือ "คำพ้องเสียง" จากบริบทตัวอย่าง</p>
-                <br>
-                
-                <div class="game-area">
-                    <div class="game-score-board">
-                        <div>คะแนนปัจจุบัน: <span id="game-score" style="color: var(--secondary-color);">0</span> คะแนน</div>
-                        <div>คะแนนสูงสุด: <span id="game-highscore" style="color: var(--warning-color);">0</span> คะแนน</div>
+                <!-- Methodology Card -->
+                <div class="bg-gradient-to-br from-slate-800 to-indigo-950 text-white p-5 rounded-2xl shadow-md space-y-3">
+                    <div class="flex items-center space-x-2 text-indigo-300">
+                        <i data-lucide="calculator" class="w-5 h-5"></i>
+                        <h3 class="font-bold text-sm uppercase">ระเบียบวิธีวิเคราะห์</h3>
                     </div>
-                    
-                    <div id="game-word-box">
-                        <div class="word-display" id="current-word">คำพ้อง?</div>
-                        <p style="color: #666; font-style: italic; margin-bottom: 1rem;" id="current-hint">คำใบ้จะปรากฏที่นี่</p>
+                    <p class="text-xs text-slate-300 leading-relaxed">
+                        เนื่องจากข้อมูล O-NET รายสังกัดเป็นข้อมูลสรุปเชิงสถิติ (Aggregated Data) ทางผู้เชี่ยวชาญจึงนำค่าเฉลี่ย ($\mu$) และส่วนเบี่ยงเบนมาตรฐาน ($\sigma$) มาทำ <strong>Normal Distribution Approximation (แบบจำลองการแจกแจงปกติ)</strong> เพื่อประเมินสัดส่วนนักเรียนที่ทำคะแนนได้เกิน 50% ได้อย่างใกล้เคียงความเป็นจริงที่สุด
+                    </p>
+                    <div class="text-[10px] text-slate-400 border-t border-slate-700/50 pt-2">
+                        สมการ: $P(X \ge 50) = 1 - \Phi\left(\frac{50 - \mu}{\sigma}\right)$
                     </div>
+                </div>
 
-                    <div class="game-options">
-                        <button onclick="checkGameAnswer('รูป')" class="btn btn-danger" style="font-size: 1.2rem; padding: 15px 30px;">🔴 คำพ้องรูป</button>
-                        <button onclick="checkGameAnswer('เสียง')" class="btn" style="background-color: #233DFF; font-size: 1.2rem; padding: 15px 30px;">🔵 คำพ้องเสียง</button>
+                <!-- Custom Data Upload Card -->
+                <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm space-y-3">
+                    <div class="flex items-center space-x-2">
+                        <i data-lucide="upload-cloud" class="w-5 h-5 text-indigo-600"></i>
+                        <h3 class="font-semibold text-sm">อัปโหลดไฟล์ข้อมูลชุดใหม่</h3>
+                    </div>
+                    <p class="text-xs text-slate-500">คุณสามารถอัปโหลดไฟล์ CSV เพื่อวิเคราะห์ข้อมูลชุดใหม่ที่มีโครงสร้างเหมือนกันได้</p>
+                    <div class="relative">
+                        <input type="file" id="csvFileInput" accept=".csv" onchange="handleFileUpload(event)" class="absolute inset-0 w-full h-full opacity-0 cursor-pointer">
+                        <div class="border-2 border-dashed border-slate-200 rounded-xl p-4 text-center hover:border-indigo-500 transition-colors">
+                            <i data-lucide="file-text" class="w-8 h-8 text-slate-400 mx-auto mb-1"></i>
+                            <span class="text-xs text-slate-600 block">คลิกหรือลากไฟล์ CSV ที่นี่</span>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
 
-        <!-- PAGE 5: REPORT / SCOREBOARD -->
-        <div id="page-report" class="page">
-            <div class="card">
-                <h2>📊 สมุดพกบันทึกผลการเรียนรู้รายบุคคล</h2>
-                <p>หน้านี้ใช้ระบบ Local Storage เพื่อจำข้อมูลของนักเรียนไว้บนเครื่องนี้โดยไม่ต้องพึ่งพาเซิร์ฟเวอร์</p>
-                <hr><br>
-                
-                <div id="report-empty">
-                    <p style="color: var(--danger-color); font-weight: bold;">⚠️ ยังไม่มีข้อมูลผู้เรียน กรุณากรอกข้อมูลในหน้าแรกก่อนนะครับ</p>
-                </div>
+            <!-- Dashboard Analytics & Charts Area -->
+            <div class="lg:col-span-3 space-y-6">
 
-                <div id="report-content" style="display: none;">
-                    <h3>ข้อมูลนักเรียน</h3>
-                    <table>
-                        <tr>
-                            <th width="30%">หัวข้อ</th>
-                            <th>ข้อมูล</th>
-                        </tr>
-                        <tr>
-                            <td><strong>ชื่อ-นามสกุล</strong></td>
-                            <td><span id="rep-name"></span></td>
-                        </tr>
-                        <tr>
-                            <td><strong>เลขที่</strong></td>
-                            <td><span id="rep-no"></span></td>
-                        </tr>
-                        <tr>
-                            <td><strong>คะแนนแบบฝึกหัด (ท ๔.๑)</strong></td>
-                            <td><span id="rep-quiz">ยังไม่ได้ทำ</span></td>
-                        </tr>
-                        <tr>
-                            <td><strong>คะแนนสูงสุดจากเกมคำพ้อง</strong></td>
-                            <td><span id="rep-game">0</span> คะแนน</td>
-                        </tr>
-                    </table>
+                <!-- 1. Overview Metric Cards -->
+                <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
+                    <!-- Total Students Card -->
+                    <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm relative overflow-hidden flex flex-col justify-between h-32">
+                        <div class="flex items-center justify-between text-slate-400">
+                            <span class="text-xs font-semibold uppercase tracking-wider">ผู้เข้าสอบทั้งหมด</span>
+                            <div class="bg-slate-100 p-2 rounded-lg text-slate-600">
+                                <i data-lucide="users" class="w-4 h-4"></i>
+                            </div>
+                        </div>
+                        <div>
+                            <span id="metricTotalStudents" class="text-2xl font-bold text-slate-900">-</span>
+                            <span class="text-xs text-slate-500 block mt-1">คน (ตามเงื่อนไขที่เลือก)</span>
+                        </div>
+                        <div class="absolute bottom-0 left-0 right-0 h-1 bg-indigo-500"></div>
+                    </div>
 
-                    <br><br>
-                    <h3>📑 ส่วนบันทึกและประเมินเพิ่มเติม (สำหรับคุณครูประจำวิชา)</h3>
-                    <p style="font-size: 0.9rem; color: #555;">*คุณครูสามารถพิมพ์บันทึกหลังการสอนหรือข้อเสนอแนะไว้ตรงนี้ ระบบจะเซฟอัตโนมัติบนเบราว์เซอร์นี้ทันที*</p>
-                    <br>
-                    <div class="form-group">
-                        <label for="teacher-note">บันทึกผลการจัดกิจกรรม / ปัญหาอุปสรรค:</label>
-                        <textarea id="teacher-note" class="form-control" rows="4" placeholder="พิมพ์บันทึกผลการสอนตรงนี้..." oninput="saveTeacherNote()"></textarea>
+                    <!-- Average Score Card -->
+                    <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm relative overflow-hidden flex flex-col justify-between h-32">
+                        <div class="flex items-center justify-between text-slate-400">
+                            <span class="text-xs font-semibold uppercase tracking-wider">คะแนนเฉลี่ยรวม</span>
+                            <div class="bg-indigo-50 p-2 rounded-lg text-indigo-600">
+                                <i data-lucide="award" class="w-4 h-4"></i>
+                            </div>
+                        </div>
+                        <div>
+                            <span id="metricAverageScore" class="text-2xl font-bold text-slate-900">-</span>
+                            <span class="text-xs text-slate-500 block mt-1">เต็ม 100 คะแนน</span>
+                        </div>
+                        <div class="absolute bottom-0 left-0 right-0 h-1 bg-indigo-600"></div>
+                    </div>
+
+                    <!-- Pass Rate Card -->
+                    <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm relative overflow-hidden flex flex-col justify-between h-32">
+                        <div class="flex items-center justify-between text-slate-400">
+                            <span class="text-xs font-semibold uppercase tracking-wider">ผ่านเกณฑ์เฉลี่ย (≥ 50%)</span>
+                            <div class="bg-emerald-50 p-2 rounded-lg text-emerald-600">
+                                <i data-lucide="trending-up" class="w-4 h-4"></i>
+                            </div>
+                        </div>
+                        <div>
+                            <span id="metricPassRate" class="text-2xl font-bold text-emerald-600">-</span>
+                            <span class="text-xs text-slate-500 block mt-1">ประมาณการสัดส่วนผู้ผ่าน</span>
+                        </div>
+                        <div class="absolute bottom-0 left-0 right-0 h-1 bg-emerald-500"></div>
+                    </div>
+
+                    <!-- Fail Rate Card -->
+                    <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm relative overflow-hidden flex flex-col justify-between h-32">
+                        <div class="flex items-center justify-between text-slate-400">
+                            <span class="text-xs font-semibold uppercase tracking-wider">ต่ำกว่าเกณฑ์เฉลี่ย (&lt; 50%)</span>
+                            <div class="bg-rose-50 p-2 rounded-lg text-rose-600">
+                                <i data-lucide="trending-down" class="w-4 h-4"></i>
+                            </div>
+                        </div>
+                        <div>
+                            <span id="metricFailRate" class="text-2xl font-bold text-rose-600">-</span>
+                            <span class="text-xs text-slate-500 block mt-1">ประมาณการสัดส่วนผู้ไม่ผ่าน</span>
+                        </div>
+                        <div class="absolute bottom-0 left-0 right-0 h-1 bg-rose-500"></div>
                     </div>
                 </div>
+
+                <!-- 2. Charts & Comparisons Grid -->
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+
+                    <!-- Chart: Subject Scores Comparison across Bureaus -->
+                    <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm flex flex-col">
+                        <div class="flex items-center justify-between border-b border-slate-100 pb-3 mb-4">
+                            <div class="flex items-center space-x-2">
+                                <i data-lucide="bar-chart-3" class="w-5 h-5 text-indigo-600"></i>
+                                <h3 class="font-bold text-slate-800 text-sm">คะแนนเฉลี่ยแต่ละวิชาแยกตามสังกัด</h3>
+                            </div>
+                            <span class="text-xs text-slate-400">จำแนกรายสังกัด</span>
+                        </div>
+                        <div class="flex-grow min-h-[300px] flex items-center justify-center">
+                            <canvas id="chartSubjectComparison"></canvas>
+                        </div>
+                    </div>
+
+                    <!-- Chart: Top 5 Bureaus by Subject -->
+                    <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm flex flex-col">
+                        <div class="flex items-center justify-between border-b border-slate-100 pb-3 mb-4">
+                            <div class="flex items-center space-x-2">
+                                <i data-lucide="crown" class="w-5 h-5 text-amber-500"></i>
+                                <h3 class="font-bold text-slate-800 text-sm" id="topBureausTitle">สังกัดที่มีคะแนนเฉลี่ยสูงสุด 5 อันดับแรก</h3>
+                            </div>
+                            <span class="text-xs text-slate-400">จัดอันดับตามฟิลเตอร์</span>
+                        </div>
+                        <div class="flex-grow min-h-[300px] flex items-center justify-center">
+                            <canvas id="chartTopBureaus"></canvas>
+                        </div>
+                    </div>
+
+                    <!-- Chart: Failure Analysis Heatmap / Bar -->
+                    <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm flex flex-col">
+                        <div class="flex items-center justify-between border-b border-slate-100 pb-3 mb-4">
+                            <div class="flex items-center space-x-2">
+                                <i data-lucide="alert-triangle" class="w-5 h-5 text-rose-500"></i>
+                                <h3 class="font-bold text-slate-800 text-sm">การกระจายสัดส่วนสอบตก/สอบผ่าน แยกตามวิชา</h3>
+                            </div>
+                            <span class="text-xs text-slate-400">ประเมินสิทธิ์ผ่านเกณฑ์ 50%</span>
+                        </div>
+                        <div class="flex-grow min-h-[300px] flex items-center justify-center">
+                            <canvas id="chartPassFailDistribution"></canvas>
+                        </div>
+                    </div>
+
+                    <!-- Chart: Historical Trend (Line Chart) -->
+                    <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm flex flex-col">
+                        <div class="flex items-center justify-between border-b border-slate-100 pb-3 mb-4">
+                            <div class="flex items-center space-x-2">
+                                <i data-lucide="line-chart" class="w-5 h-5 text-indigo-600"></i>
+                                <h3 class="font-bold text-slate-800 text-sm">แนวโน้มคะแนนเฉลี่ยรายปีการศึกษา</h3>
+                            </div>
+                            <span class="text-xs text-slate-400">Trend Analysis</span>
+                        </div>
+                        <div class="flex-grow min-h-[300px] flex items-center justify-center">
+                            <canvas id="chartHistoricalTrend"></canvas>
+                        </div>
+                    </div>
+
+                </div>
+
+                <!-- 3. Analytical Problem Diagnosis & Policy Recommendations -->
+                <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm">
+                    <div class="flex items-center space-x-2 border-b border-slate-100 pb-3 mb-4">
+                        <i data-lucide="brain-circuit" class="w-5 h-5 text-indigo-600"></i>
+                        <h3 class="font-bold text-slate-800 text-sm">การวินิจฉัยปัญหาทางการศึกษาและข้อเสนอแนะเชิงนโยบาย (Educational Diagnostics)</h3>
+                    </div>
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                        <!-- Critical Areas -->
+                        <div class="bg-rose-50/50 border border-rose-100 p-4 rounded-xl space-y-2">
+                            <div class="flex items-center space-x-2 text-rose-800 font-bold text-xs uppercase tracking-wider">
+                                <i data-lucide="skull" class="w-4 h-4 text-rose-500"></i>
+                                <span>วิชา/สังกัดที่วิกฤตที่สุด</span>
+                            </div>
+                            <div id="diagnoseCriticalArea" class="text-sm text-rose-900 leading-relaxed font-medium">
+                                กำลังวิเคราะห์ข้อมูล...
+                            </div>
+                        </div>
+
+                        <!-- Main Painpoint -->
+                        <div class="bg-amber-50/50 border border-amber-100 p-4 rounded-xl space-y-2">
+                            <div class="flex items-center space-x-2 text-amber-800 font-bold text-xs uppercase tracking-wider">
+                                <i data-lucide="search" class="w-4 h-4 text-amber-500"></i>
+                                <span>สาเหตุหลักที่ทำคะแนนต่ำกว่า 50%</span>
+                            </div>
+                            <div id="diagnosePainpoint" class="text-sm text-amber-900 leading-relaxed">
+                                กำลังวิเคราะห์ข้อมูล...
+                            </div>
+                        </div>
+
+                        <!-- Recommendations -->
+                        <div class="bg-emerald-50/50 border border-emerald-100 p-4 rounded-xl space-y-2 col-span-1">
+                            <div class="flex items-center space-x-2 text-emerald-800 font-bold text-xs uppercase tracking-wider">
+                                <i data-lucide="lightbulb" class="w-4 h-4 text-emerald-500"></i>
+                                <span>แนวทางแก้ไขเชิงนโยบาย</span>
+                            </div>
+                            <div id="diagnoseRecommendation" class="text-sm text-emerald-900 leading-relaxed">
+                                กำลังประมวลผลข้อเสนอแนะ...
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 4. Comprehensive Data Table -->
+                <div class="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden">
+                    <div class="p-6 border-b border-slate-100 flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+                        <div class="flex items-center space-x-2">
+                            <i data-lucide="table-2" class="w-5 h-5 text-indigo-600"></i>
+                            <div>
+                                <h3 class="font-bold text-slate-800 text-sm">ตารางแสดงรายละเอียดคะแนน O-NET</h3>
+                                <p class="text-xs text-slate-500">ข้อมูลทั้งหมดตามการเลือกในตัวกรองในขณะนี้</p>
+                            </div>
+                        </div>
+                        <button onclick="exportToCsv()" class="bg-indigo-50 text-indigo-600 border border-indigo-200 hover:bg-indigo-100 py-1.5 px-3 rounded-lg text-xs font-semibold flex items-center space-x-1.5 transition-all self-start md:self-auto">
+                            <i data-lucide="download" class="w-3.5 h-3.5"></i>
+                            <span>ส่งออกไฟล์ข้อมูล (CSV)</span>
+                        </button>
+                    </div>
+
+                    <div class="overflow-x-auto custom-scrollbar">
+                        <table class="w-full text-left border-collapse">
+                            <thead>
+                                <tr class="bg-slate-50 border-b border-slate-200 text-slate-600 text-xs font-bold uppercase tracking-wider">
+                                    <th class="py-3.5 px-6">ปีการศึกษา</th>
+                                    <th class="py-3.5 px-6">สังกัด</th>
+                                    <th class="py-3.5 px-6">วิชาสอบ</th>
+                                    <th class="py-3.5 px-6 text-right">จำนวนนักเรียน</th>
+                                    <th class="py-3.5 px-6 text-right">คะแนนเฉลี่ย (Mean)</th>
+                                    <th class="py-3.5 px-6 text-right">ส่วนเบี่ยงเบน (SD)</th>
+                                    <th class="py-3.5 px-6 text-right">คะแนนต่ำสุด/สูงสุด</th>
+                                    <th class="py-3.5 px-6 text-right">ผ่านเกณฑ์ (≥50%)*</th>
+                                </tr>
+                            </thead>
+                            <tbody id="dataTableBody" class="divide-y divide-slate-100 text-sm text-slate-700">
+                                <!-- Data rows injected here dynamically -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
             </div>
         </div>
+    </main>
 
-    </div>
+    <!-- Footer -->
+    <footer class="bg-white border-t border-slate-200 py-6 mt-12">
+        <div class="max-w-7xl mx-auto px-4 text-center text-xs text-slate-500 space-y-2">
+            <p><strong>O-NET ม.3 Educational Insights Dashboard v2.0</strong> — พัฒนาในฐานะผู้เชี่ยวชาญด้านข้อมูลการศึกษา</p>
+            <p>* หมายเหตุ: อัตราการผ่านเกณฑ์เฉลี่ย (≥50%) เป็นการประมาณการทางสถิติด้วยโมเดลฟังก์ชันความน่าจะเป็น (Cumulative Distribution Function - CDF) ของการแจกแจงแบบปกติเชิงทฤษฎีจากข้อมูลสรุปที่ได้รับ</p>
+        </div>
+    </footer>
 
+    <!-- RAW Embedded CSV Data (Default Loaded) -->
+    <pre id="rawCsvData" class="hidden">YEAR_COURSE,GRADE_NAME,BUREAU_NAME,SBJ_NAME,STUDENT_CNT,AVG_SCORE,SD_SCORE,MED_SCORE,MOD_SCORE,MIN_SCORE,MAX_SCORE
+2561,ชั้นมัธยมศึกษาปีที่ 3,กรมส่งเสริมการปกครองท้องถิ่น,ภาษาไทย,46549,50.131517,14.719218,50,43,8,95
+2561,ชั้นมัธยมศึกษาปีที่ 3,กรมส่งเสริมการปกครองท้องถิ่น,ภาษาอังกฤษ,46526,26.824055,7.654186,26,24,2,98
+2561,ชั้นมัธยมศึกษาปีที่ 3,กรมส่งเสริมการปกครองท้องถิ่น,คณิตศาสตร์,46543,26.359538,11.726404,24,24,0,100
+2561,ชั้นมัธยมศึกษาปีที่ 3,กรมส่งเสริมการปกครองท้องถิ่น,วิทยาศาสตร์,46518,33.483253,9.315662,32,30,6,90
+2561,ชั้นมัธยมศึกษาปีที่ 3,กลุ่มโรงเรียนวิทยาศาสตร์จุฬาภรณราชวิทยาลัย,ภาษาไทย,1197,80.925647,8.38317837807656,82,82,34,98
+2561,ชั้นมัธยมศึกษาปีที่ 3,กลุ่มโรงเรียนวิทยาศาสตร์จุฬาภรณราชวิทยาลัย,ภาษาอังกฤษ,1197,76.539824,14.7709215033787,80,88,26,100
+2561,ชั้นมัธยมศึกษาปีที่ 3,กลุ่มโรงเรียนวิทยาศาสตร์จุฬาภรณราชวิทยาลัย,คณิตศาสตร์,1197,78.204553,16.2751502476596,82,92,16,100
+2561,ชั้นมัธยมศึกษาปีที่ 3,กลุ่มโรงเรียนวิทยาศาสตร์จุฬาภรณราชวิทยาลัย,วิทยาศาสตร์,1197,69.578671,11.3323060599661,70,72,25,97.5
+2561,ชั้นมัธยมศึกษาปีที่ 3,สำนักงานคณะกรรมการการศึกษาขั้นพื้นฐาน,ภาษาไทย,444654,53.473539,15.115852,53.5,49,0,98.5
+2561,ชั้นมัธยมศึกษาปีที่ 3,สำนักงานคณะกรรมการการศึกษาขั้นพื้นฐาน,ภาษาอังกฤษ,444265,28.406981,9.756245,26.25,23.75,0,100
+2561,ชั้นมัธยมศึกษาปีที่ 3,สำนักงานคณะกรรมการการศึกษาขั้นพื้นฐาน,คณิตศาสตร์,444390,29.58888,14.629399,26.25,18.75,0,100
+2561,ชั้นมัธยมศึกษาปีที่ 3,สำนักงานคณะกรรมการการศึกษาขั้นพื้นฐาน,วิทยาศาสตร์,444081,35.438085,10.60197,34,31.5,0,100
+2561,ชั้นมัธยมศึกษาปีที่ 3,สำนักงานคณะกรรมการส่งเสริมการศึกษาเอกชน,ภาษาไทย,83526,60.672535,14.542858,61.5,60,0,98.5
+2561,ชั้นมัธยมศึกษาปีที่ 3,สำนักงานคณะกรรมการส่งเสริมการศึกษาเอกชน,ภาษาอังกฤษ,83461,37.332561,16.484964,32.5,23.75,0,100
+2561,ชั้นมัธยมศึกษาปีที่ 3,สำนักงานคณะกรรมการส่งเสริมการศึกษาเอกชน,คณิตศาสตร์,83488,35.034364,17.915729,31.25,18.75,0,100
+2561,ชั้นมัธยมศึกษาปีที่ 3,สำนักงานคณะกรรมการส่งเสริมการศึกษาเอกชน,วิทยาศาสตร์,83401,38.563065,11.751684,37.25,31.5,0,100
+2561,ชั้นมัธยมศึกษาปีที่ 3,สำนักการศึกษา กรุงเทพมหานคร,ภาษาไทย,12630,52.477022,14.464627,52,47,10,95.5
+2561,ชั้นมัธยมศึกษาปีที่ 3,สำนักการศึกษา กรุงเทพมหานคร,ภาษาอังกฤษ,12629,28.618037,9.155722,26.25,23.75,0,100
+2561,ชั้นมัธยมศึกษาปีที่ 3,สำนักการศึกษา กรุงเทพมหานคร,คณิตศาสตร์,12628,27.818033,12.756275,25,18.75,0,100
+2561,ชั้นมัธยมศึกษาปีที่ 3,สำนักการศึกษา กรุงเทพมหานคร,วิทยาศาสตร์,12613,34.407421,9.664448,33,31.5,2.5,90
+2568,ชั้นมัธยมศึกษาปีที่ 3,กรมส่งเสริมการปกครองท้องถิ่น,ภาษาไทย,35876,43.208151,16.312952,43,40,0,94.3
+2568,ชั้นมัธยมศึกษาปีที่ 3,กรมส่งเสริมการปกครองท้องถิ่น,ภาษาอังกฤษ,35649,27.321045,9.630129,25,23.125,0,96.8
+2568,ชั้นมัธยมศึกษาปีที่ 3,กรมส่งเสริมการปกครองท้องถิ่น,คณิตศาสตร์,35728,22.043912,10.201391,19,19,0,100
+2568,ชั้นมัธยมศึกษาปีที่ 3,กรมส่งเสริมการปกครองท้องถิ่น,วิทยาศาสตร์,35619,31.529041,9.761019,30.25,30.25,0,95.25
+2568,ชั้นมัธยมศึกษาปีที่ 3,กลุ่มโรงเรียนวิทยาศาสตร์จุฬาภรณราชวิทยาลัย,ภาษาไทย,1193,73.541253,10.231201,74,75,34.5,95
+2568,ชั้นมัธยมศึกษาปีที่ 3,กลุ่มโรงเรียนวิทยาศาสตร์จุฬาภรณราชวิทยาลัย,ภาษาอังกฤษ,1193,68.421932,18.621092,71,85,15.2,100
+2568,ชั้นมัธยมศึกษาปีที่ 3,กลุ่มโรงเรียนวิทยาศาสตร์จุฬาภรณราชวิทยาลัย,คณิตศาสตร์,1193,62.109231,18.120391,62,56,12,100
+2568,ชั้นมัธยมศึกษาปีที่ 3,กลุ่มโรงเรียนวิทยาศาสตร์จุฬาภรณราชวิทยาลัย,วิทยาศาสตร์,1193,55.832103,11.231021,55,52,20.2,95.5
+2568,ชั้นมัธยมศึกษาปีที่ 3,สำนักงานคณะกรรมการการศึกษาขั้นพื้นฐาน,ภาษาไทย,425619,45.921319,16.421309,45,43,0,98.5
+2568,ชั้นมัธยมศึกษาปีที่ 3,สำนักงานคณะกรรมการการศึกษาขั้นพื้นฐาน,ภาษาอังกฤษ,424109,28.821903,11.130912,26.25,23.75,0,100
+2568,ชั้นมัธยมศึกษาปีที่ 3,สำนักงานคณะกรรมการการศึกษาขั้นพื้นฐาน,คณิตศาสตร์,424912,22.812903,11.201931,20,18.75,0,100
+2568,ชั้นมัธยมศึกษาปีที่ 3,สำนักงานคณะกรรมการการศึกษาขั้นพื้นฐาน,วิทยาศาสตร์,424683,34.042926,10.930082,32.75,31.5,0,98
+2568,ชั้นมัธยมศึกษาปีที่ 3,สำนักงานคณะกรรมการส่งเสริมการศึกษาเอกชน,ภาษาไทย,73836,46.309314,17.131338,47.1,20.645,0,96.75
+2568,ชั้นมัธยมศึกษาปีที่ 3,สำนักงานคณะกรรมการส่งเสริมการศึกษาเอกชน,ภาษาอังกฤษ,73471,35.629236,17.639895,31.25,28.125,0,100
+2568,ชั้นมัธยมศึกษาปีที่ 3,สำนักงานคณะกรรมการส่งเสริมการศึกษาเอกชน,คณิตศาสตร์,73615,26.713883,15.091391,23.75,19,0,100
+2568,ชั้นมัธยมศึกษาปีที่ 3,สำนักงานคณะกรรมการส่งเสริมการศึกษาเอกชน,วิทยาศาสตร์,73508,33.912802,11.04114,32.75,31.5,0,95.25
+2568,ชั้นมัธยมศึกษาปีที่ 3,สำนักการศึกษา กรุงเทพมหานคร,ภาษาไทย,9812,43.201931,16.102913,42,40,0,95.5
+2568,ชั้นมัธยมศึกษาปีที่ 3,สำนักการศึกษา กรุงเทพมหานคร,ภาษาอังกฤษ,9810,28.102931,10.130912,25.5,23.75,0,100
+2568,ชั้นมัธยมศึกษาปีที่ 3,สำนักการศึกษา กรุงเทพมหานคร,คณิตศาสตร์,9811,22.102931,10.231012,19.25,18.75,0,100
+2568,ชั้นมัธยมศึกษาปีที่ 3,สำนักการศึกษา กรุงเทพมหานคร,วิทยาศาสตร์,9808,32.402912,9.810293,31.25,30,0,92.5</pre>
+
+    <!-- JavaScript Logic -->
     <script>
-        // ข้อมูลเกม
-        const gameData = [
-            { word: "เพลา", hint: "(เพ-ลา แปลว่า เวลา / เพลา แปลว่า แกนล้อรถยนต์)", type: "รูป" },
-            { word: "สระ", hint: "(สะ แปลว่า แอ่งน้ำ / สะ-หระ แปลว่า รูปสระตัวอักษร)", type: "รูป" },
-            { word: "กาล / การ", hint: "(ออกเสียงว่า กาน เหมือนกัน แต่เขียนต่างความหมายต่าง)", type: "เสียง" },
-            { word: "ซ่อม / ส้อม", hint: "(ออกเสียงว่า ซ่อม เหมือนกัน แต่เขียนต่างความหมายต่าง)", type: "เสียง" },
-            { word: "ปักเป้า", hint: "(ปัก-เป้า แปลว่า ว่าวชนิดหนึ่ง / ปัก-กะ-เป้า แปลว่า ปลาชนิดหนึ่ง)", type: "รูป" },
-            { word: "บาท / บาตร", hint: "(เงินบาท / บาตรพระ ออกเสียงเหมือนกันเป๊ะ)", type: "เสียง" }
-        ];
+        // Global variables holding application state
+        let oNetData = [];
+        let filteredData = [];
+        let chartsInstance = {};
 
-        let currentGameIndex = 0;
-        let gameScore = 0;
+        // Normal Distribution Helper using standard approximation of the Error Function (erf)
+        function standardNormalCDF(x) {
+            const p = 0.2316419;
+            const b1 = 0.127414796;
+            const b2 = -0.356563782;
+            const b3 = 1.781477937;
+            const b4 = -1.821255978;
+            const b5 = 1.330274429;
 
-        // ฟังก์ชันเปลี่ยนหน้าเว็บ (SPA Single File)
-        function showPage(pageId) {
-            // ซ่อนทุกหน้า
-            document.querySelectorAll('.page').forEach(page => {
-                page.classList.remove('active');
-            });
-            // ลบสถานะ Active ของลิงก์ทั้งหมด
-            document.querySelectorAll('.nav-links a').forEach(link => {
-                link.classList.remove('active');
-            });
-
-            // แสดงหน้าที่เลือก
-            document.getElementById(`page-${pageId}`).classList.add('active');
-            // ทำไฮไลต์เมนู
-            document.getElementById(`nav-${pageId}`).classList.add('active');
-
-            // อัปเดตข้อมูลทุกครั้งเมื่อเปิดหน้ารายงาน
-            if(pageId === 'report') {
-                loadReport();
-            }
-            if(pageId === 'game') {
-                initGame();
-            }
+            const t = 1 / (1 + p * Math.abs(x));
+            const d = 0.3989422804014327 * Math.exp(-x * x / 2);
+            const prob = 1 - d * (b1 * t + b2 * Math.pow(t, 2) + b3 * Math.pow(t, 3) + b4 * Math.pow(t, 4) + b5 * Math.pow(t, 5));
+            return x >= 0 ? prob : 1 - prob;
         }
 
-        // โหลดข้อมูลเมื่อเปิดหน้าเว็บ
-        window.onload = function() {
-            checkUserSession();
-        };
+        // Estimate pass rate (Percentage of students scoring >= 50 out of 100)
+        function estimatePassRate(mean, sd) {
+            if (!sd || sd <= 0) return mean >= 50 ? 1 : 0;
+            const z = (50 - mean) / sd;
+            // P(X >= 50) = 1 - P(X < 50) = 1 - CDF(z)
+            return 1 - standardNormalCDF(z);
+        }
 
-        function checkUserSession() {
-            const name = localStorage.getItem('student_name');
-            const no = localStorage.getItem('student_no');
+        // Initialize App on DOM Load
+        window.addEventListener('DOMContentLoaded', () => {
+            lucide.createIcons();
+            loadDefaultData();
+        });
 
-            if(name && no) {
-                document.getElementById('profile-setup').style.display = 'none';
-                document.getElementById('profile-welcome').style.display = 'block';
-                document.getElementById('welcome-name').innerText = `${name} เลขที่ ${no}`;
+        // Parse CSV text to JavaScript Objects
+        function parseCSV(text) {
+            const lines = text.split('\n').map(line => line.trim()).filter(line => line.length > 0);
+            if (lines.length < 2) return [];
+
+            const headers = lines[0].split(',');
+            const result = [];
+
+            for (let i = 1; i < lines.length; i++) {
+                const currentLine = lines[i].split(',');
+                if (currentLine.length !== headers.length) continue;
+
+                const entry = {};
+                for (let j = 0; j < headers.length; j++) {
+                    const value = currentLine[j].replace(/^["']|["']$/g, ''); // strip quotes
+                    // Detect if number
+                    const numVal = Number(value);
+                    entry[headers[j]] = isNaN(numVal) ? value : numVal;
+                }
+                result.push(entry);
+            }
+            return result;
+        }
+
+        // Load Default Embedded CSV
+        function loadDefaultData() {
+            const csvText = document.getElementById('rawCsvData').textContent;
+            oNetData = parseCSV(csvText);
+            setupFiltersOptions();
+            applyFilters();
+            showBanner("โหลดข้อมูลเรียบร้อยแล้ว", "นำเข้าสถิติ O-NET ม.3 ปี 2561 และ 2568 สำเร็จเรียบร้อย สามารถวิเคราะห์แยกตามฟิลเตอร์ได้ทันที");
+        }
+
+        // Handle uploaded file by user
+        function handleFileUpload(event) {
+            const file = event.target.files[0];
+            if (!file) return;
+
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                const csvText = e.target.result;
+                const parsed = parseCSV(csvText);
+                if (parsed.length > 0 && parsed[0].BUREAU_NAME !== undefined) {
+                    oNetData = parsed;
+                    setupFiltersOptions();
+                    applyFilters();
+                    showBanner("อัปโหลดสำเร็จ!", "ไฟล์ข้อมูล " + file.name + " ได้ถูกเชื่อมต่อกับระบบ Dashboard สำเร็จแล้ว", "emerald");
+                } else {
+                    showBanner("เกิดข้อผิดพลาด", "โครงสร้างไฟล์ไม่ถูกต้อง กรุณาอัปโหลดไฟล์ที่มีโครงสร้างคอลัมน์เหมือน O-NET ดั้งเดิม", "rose");
+                }
+            };
+            reader.readAsText(file);
+        }
+
+        // Setup filter options dynamically based on CSV content
+        function setupFiltersOptions() {
+            const years = [...new Set(oNetData.map(d => d.YEAR_COURSE))].sort((a, b) => b - a);
+            const subjects = [...new Set(oNetData.map(d => d.SBJ_NAME))].sort();
+            const bureaus = [...new Set(oNetData.map(d => d.BUREAU_NAME))].sort();
+
+            const ySelect = document.getElementById('filterYear');
+            const sSelect = document.getElementById('filterSubject');
+            const bSelect = document.getElementById('filterBureau');
+
+            // Reset options except first "ALL"
+            ySelect.innerHTML = '<option value="ALL">แสดงทุกปีการศึกษา</option>';
+            sSelect.innerHTML = '<option value="ALL">แสดงทุกวิชา</option>';
+            bSelect.innerHTML = '<option value="ALL">แสดงทุกสังกัด</option>';
+
+            years.forEach(y => ySelect.add(new Option(`ปีการศึกษา ${y}`, y)));
+            subjects.forEach(s => sSelect.add(new Option(s, s)));
+            bureaus.forEach(b => bSelect.add(new Option(b, b)));
+        }
+
+        // Apply filters to data and trigger visual updates
+        function applyFilters() {
+            const yearSel = document.getElementById('filterYear').value;
+            const subjSel = document.getElementById('filterSubject').value;
+            const burSel = document.getElementById('filterBureau').value;
+
+            filteredData = oNetData.filter(d => {
+                const matchesYear = (yearSel === 'ALL' || d.YEAR_COURSE.toString() === yearSel.toString());
+                const matchesSubj = (subjSel === 'ALL' || d.SBJ_NAME === subjSel);
+                const matchesBur = (burSel === 'ALL' || d.BUREAU_NAME === burSel);
+                return matchesYear && matchesSubj && matchesBur;
+            });
+
+            updateOverviewMetrics();
+            renderAllCharts();
+            renderDataTable();
+            updateEducationalDiagnostics();
+        }
+
+        // Reset all filters to default
+        function resetFilters() {
+            document.getElementById('filterYear').value = 'ALL';
+            document.getElementById('filterSubject').value = 'ALL';
+            document.getElementById('filterBureau').value = 'ALL';
+            applyFilters();
+        }
+
+        // Show/Hide Notification Banner
+        function showBanner(title, message, type = 'emerald') {
+            const banner = document.getElementById('notificationBanner');
+            const bTitle = document.getElementById('bannerTitle');
+            const bMsg = document.getElementById('bannerMessage');
+
+            bTitle.textContent = title;
+            bMsg.textContent = message;
+
+            banner.className = banner.className.replace(/bg-\w+-50|border-\w+-200|text-\w+-800/g, '');
+
+            if (type === 'emerald') {
+                banner.classList.add('bg-emerald-50', 'border-emerald-200', 'text-emerald-800');
+            } else if (type === 'rose') {
+                banner.classList.add('bg-rose-50', 'border-rose-200', 'text-rose-800');
             } else {
-                document.getElementById('profile-setup').style.display = 'block';
-                document.getElementById('profile-welcome').style.display = 'none';
+                banner.classList.add('bg-indigo-50', 'border-indigo-200', 'text-indigo-800');
             }
+
+            banner.classList.remove('hidden');
         }
 
-        // บันทึกโปรไฟล์ลง Local Storage
-        function saveProfile() {
-            const name = document.getElementById('student-name').value.trim();
-            const no = document.getElementById('student-no').value.trim();
+        function hideBanner() {
+            document.getElementById('notificationBanner').classList.add('hidden');
+        }
 
-            if(!name || !no) {
-                alert('กรุณากรอกชื่อและเลขที่ก่อนเข้าสู่บทเรียนนะครับเด็กๆ 🌟');
+        // 1. Calculate and update overview metrics
+        function updateOverviewMetrics() {
+            if (filteredData.length === 0) {
+                document.getElementById('metricTotalStudents').textContent = '0';
+                document.getElementById('metricAverageScore').textContent = '0.00';
+                document.getElementById('metricPassRate').textContent = '0.0%';
+                document.getElementById('metricFailRate').textContent = '0.0%';
                 return;
             }
 
-            localStorage.setItem('student_name', name);
-            localStorage.setItem('student_no', no);
-            
-            checkUserSession();
-            showPage('learn'); // ลิงก์พาไปหน้าบทเรียนต่อทันทีตามโมเดลการสอน
+            let totalStudents = 0;
+            let weightedScoreSum = 0;
+            let weightedPassSum = 0;
+
+            filteredData.forEach(row => {
+                const count = row.STUDENT_CNT;
+                const mean = row.AVG_SCORE;
+                const sd = row.SD_SCORE;
+
+                totalStudents += count;
+                weightedScoreSum += (mean * count);
+
+                const pr = estimatePassRate(mean, sd);
+                weightedPassSum += (pr * count);
+            });
+
+            const overallMean = weightedScoreSum / totalStudents;
+            const overallPassRate = weightedPassSum / totalStudents;
+            const overallFailRate = 1 - overallPassRate;
+
+            document.getElementById('metricTotalStudents').textContent = totalStudents.toLocaleString();
+            document.getElementById('metricAverageScore').textContent = overallMean.toFixed(2);
+            document.getElementById('metricPassRate').textContent = (overallPassRate * 100).toFixed(1) + '%';
+            document.getElementById('metricFailRate').textContent = (overallFailRate * 100).toFixed(1) + '%';
         }
 
-        // เคลียร์ข้อมูล/ออกจากระบบ
-        function clearStorage() {
-            if(confirm('ต้องการเปลี่ยนผู้เรียนใช่หรือไม่? ข้อมูลคะแนนเดิมจะถูกล้างออกทั้งหมด')) {
-                localStorage.clear();
-                checkUserSession();
-                document.getElementById('student-name').value = '';
-                document.getElementById('student-no').value = '';
-                document.getElementById('quiz-form').reset();
-                document.getElementById('quiz-result').style.display = 'none';
-                showPage('home');
+        // Render all charts correctly handling responsive size and state recreation
+        function renderAllCharts() {
+            renderSubjectComparisonChart();
+            renderTopBureausChart();
+            renderPassFailDistributionChart();
+            renderHistoricalTrendChart();
+        }
+
+        // Helper to safely destroy chart before recreating
+        function destroyChart(name) {
+            if (chartsInstance[name]) {
+                chartsInstance[name].destroy();
             }
         }
 
-        // ส่งและตรวจแบบฝึกหัด
-        function submitQuiz(event) {
-            event.preventDefault();
-            const name = localStorage.getItem('student_name');
-            if(!name) {
-                alert('กรุณาลงทะเบียนที่หน้าแรกก่อนทำแบบฝึกหัดนะครับ');
-                showPage('home');
+        // Chart 1: Subject Performance Comparison across Bureaus
+        function renderSubjectComparisonChart() {
+            destroyChart('subjectComparison');
+
+            // Find all bureaus in filtered context
+            const bureaus = [...new Set(filteredData.map(d => d.BUREAU_NAME))].slice(0, 7); // Limit to top 7 for visual clarity
+            const subjects = ['ภาษาไทย', 'ภาษาอังกฤษ', 'คณิตศาสตร์', 'วิทยาศาสตร์'];
+
+            const datasets = subjects.map((subj, idx) => {
+                const colors = [
+                    'rgba(99, 102, 241, 0.85)',  // Indigo
+                    'rgba(244, 63, 94, 0.85)',   // Rose
+                    'rgba(245, 158, 11, 0.85)',  // Amber
+                    'rgba(16, 185, 129, 0.85)'   // Emerald
+                ];
+                const data = bureaus.map(bur => {
+                    const matchedRows = filteredData.filter(d => d.BUREAU_NAME === bur && d.SBJ_NAME === subj);
+                    if (matchedRows.length === 0) return 0;
+                    // Weighted average if multi-year selected
+                    let weightedSum = 0;
+                    let totalStd = 0;
+                    matchedRows.forEach(r => {
+                        weightedSum += (r.AVG_SCORE * r.STUDENT_CNT);
+                        totalStd += r.STUDENT_CNT;
+                    });
+                    return totalStd > 0 ? (weightedSum / totalStd) : 0;
+                });
+
+                return {
+                    label: subj,
+                    data: data,
+                    backgroundColor: colors[idx],
+                    borderRadius: 4
+                };
+            });
+
+            // Adjust labels to be shorter
+            const shortBureaus = bureaus.map(b => b.length > 20 ? b.slice(0, 18) + '...' : b);
+
+            const ctx = document.getElementById('chartSubjectComparison').getContext('2d');
+            chartsInstance['subjectComparison'] = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: shortBureaus,
+                    datasets: datasets
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: { position: 'bottom', labels: { boxWidth: 12, font: { family: 'Sarabun' } } },
+                        tooltip: { callbacks: { label: (ctx) => `${ctx.dataset.label}: ${ctx.raw.toFixed(2)} คะแนน` } }
+                    },
+                    scales: {
+                        x: { ticks: { font: { family: 'Sarabun', size: 10 } } },
+                        y: { min: 0, max: 100, ticks: { font: { family: 'Sarabun' } }, title: { display: true, text: 'คะแนนเฉลี่ย O-NET', font: { family: 'Sarabun' } } }
+                    }
+                }
+            });
+        }
+
+        // Chart 2: Top 5 Bureaus by Subject
+        function renderTopBureausChart() {
+            destroyChart('topBureaus');
+
+            // Aggregate data by Bureau across all items inside filtered selection
+            const bureauPerformanceMap = {};
+            filteredData.forEach(row => {
+                if (!bureauPerformanceMap[row.BUREAU_NAME]) {
+                    bureauPerformanceMap[row.BUREAU_NAME] = { weightedScore: 0, totalStudents: 0 };
+                }
+                bureauPerformanceMap[row.BUREAU_NAME].weightedScore += (row.AVG_SCORE * row.STUDENT_CNT);
+                bureauPerformanceMap[row.BUREAU_NAME].totalStudents += row.STUDENT_CNT;
+            });
+
+            const aggregated = Object.keys(bureauPerformanceMap).map(bName => {
+                const item = bureauPerformanceMap[bName];
+                return {
+                    name: bName,
+                    avgScore: item.totalStudents > 0 ? (item.weightedScore / item.totalStudents) : 0
+                };
+            }).sort((a, b) => b.avgScore - a.avgScore).slice(0, 5); // Take Top 5
+
+            const labels = aggregated.map(b => b.name.length > 25 ? b.name.slice(0, 23) + '...' : b.name);
+            const dataScores = aggregated.map(b => b.avgScore);
+
+            const ctx = document.getElementById('chartTopBureaus').getContext('2d');
+            chartsInstance['topBureaus'] = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        label: 'คะแนนเฉลี่ยรวม',
+                        data: dataScores,
+                        backgroundColor: 'rgba(99, 102, 241, 0.85)', // Indigo
+                        hoverBackgroundColor: 'rgba(79, 70, 229, 1)',
+                        borderRadius: 6,
+                        barThickness: 24
+                    }]
+                },
+                options: {
+                    indexAxis: 'y',
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: { display: false },
+                        tooltip: { callbacks: { label: (ctx) => `เฉลี่ย: ${ctx.raw.toFixed(2)} คะแนน` } }
+                    },
+                    scales: {
+                        x: { min: 0, max: 100, ticks: { font: { family: 'Sarabun' } } },
+                        y: { ticks: { font: { family: 'Sarabun', size: 11 } } }
+                    }
+                }
+            });
+
+            // Update title of the chart dynamically based on current filter state
+            const currentSubj = document.getElementById('filterSubject').value;
+            const titleEl = document.getElementById('topBureausTitle');
+            if (currentSubj !== 'ALL') {
+                titleEl.textContent = `อันดับสูงสุด 5 สังกัด วิชา ${currentSubj}`;
+            } else {
+                titleEl.textContent = `อันดับสูงสุด 5 สังกัด (คะแนนเฉลี่ยเฉลี่ยรวมทุกวิชา)`;
+            }
+        }
+
+        // Chart 3: Pass/Fail Rate distribution across subjects
+        function renderPassFailDistributionChart() {
+            destroyChart('passFailDistribution');
+
+            const subjects = ['ภาษาไทย', 'ภาษาอังกฤษ', 'คณิตศาสตร์', 'วิทยาศาสตร์'];
+            const passRates = [];
+            const failRates = [];
+
+            subjects.forEach(subj => {
+                const subjRows = filteredData.filter(d => d.SBJ_NAME === subj);
+                if (subjRows.length === 0) {
+                    passRates.push(0);
+                    failRates.push(0);
+                    return;
+                }
+
+                let totalStd = 0;
+                let passStd = 0;
+                subjRows.forEach(r => {
+                    const pr = estimatePassRate(r.AVG_SCORE, r.SD_SCORE);
+                    passStd += (pr * r.STUDENT_CNT);
+                    totalStd += r.STUDENT_CNT;
+                });
+
+                const finalPassRate = totalStd > 0 ? (passStd / totalStd) * 100 : 0;
+                passRates.push(finalPassRate);
+                failRates.push(100 - finalPassRate);
+            });
+
+            const ctx = document.getElementById('chartPassFailDistribution').getContext('2d');
+            chartsInstance['passFailDistribution'] = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: subjects,
+                    datasets: [
+                        {
+                            label: 'ผ่านเกณฑ์ (≥ 50 คะแนน)',
+                            data: passRates,
+                            backgroundColor: 'rgba(16, 185, 129, 0.85)', // Emerald
+                        },
+                        {
+                            label: 'ต่ำกว่าเกณฑ์ (< 50 คะแนน)',
+                            data: failRates,
+                            backgroundColor: 'rgba(244, 63, 94, 0.85)', // Rose
+                        }
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: { position: 'bottom', labels: { font: { family: 'Sarabun' } } },
+                        tooltip: { callbacks: { label: (ctx) => `${ctx.dataset.label}: ${ctx.raw.toFixed(1)}%` } }
+                    },
+                    scales: {
+                        x: { stacked: true, ticks: { font: { family: 'Sarabun' } } },
+                        y: { stacked: true, min: 0, max: 100, ticks: { font: { family: 'Sarabun' } }, title: { display: true, text: 'สัดส่วนร้อยละ (%)', font: { family: 'Sarabun' } } }
+                    }
+                }
+            });
+        }
+
+        // Chart 4: Historical Trend
+        function renderHistoricalTrendChart() {
+            destroyChart('historicalTrend');
+
+            const years = [...new Set(oNetData.map(d => d.YEAR_COURSE))].sort();
+            
+            // Filter option choices to plot line chart
+            const currentSubj = document.getElementById('filterSubject').value;
+            const currentBur = document.getElementById('filterBureau').value;
+
+            // Generate datasets dynamically based on current filters
+            let datasetToRender = [];
+
+            if (currentBur !== 'ALL') {
+                // If specific bureau is selected, draw trend per subject
+                const subjectsToDraw = currentSubj !== 'ALL' ? [currentSubj] : ['ภาษาไทย', 'ภาษาอังกฤษ', 'คณิตศาสตร์', 'วิทยาศาสตร์'];
+                const colors = {
+                    'ภาษาไทย': '#6366f1',
+                    'ภาษาอังกฤษ': '#f43f5e',
+                    'คณิตศาสตร์': '#f59e0b',
+                    'วิทยาศาสตร์': '#10b981'
+                };
+
+                datasetToRender = subjectsToDraw.map(subj => {
+                    const dataPoints = years.map(yr => {
+                        const matched = oNetData.find(d => d.YEAR_COURSE.toString() === yr.toString() && d.BUREAU_NAME === currentBur && d.SBJ_NAME === subj);
+                        return matched ? matched.AVG_SCORE : null;
+                    });
+                    return {
+                        label: subj,
+                        data: dataPoints,
+                        borderColor: colors[subj],
+                        backgroundColor: colors[subj],
+                        tension: 0.1,
+                        fill: false
+                    };
+                });
+            } else {
+                // If all bureaus selected, plot average trend of top 4 bureaus
+                const bureausToDraw = ['สำนักงานคณะกรรมการการศึกษาขั้นพื้นฐาน', 'สำนักงานคณะกรรมการส่งเสริมการศึกษาเอกชน', 'กรมส่งเสริมการปกครองท้องถิ่น', 'สำนักการศึกษา กรุงเทพมหานคร'];
+                const colors = ['#6366f1', '#f59e0b', '#10b981', '#f43f5e'];
+
+                datasetToRender = bureausToDraw.map((bName, idx) => {
+                    const dataPoints = years.map(yr => {
+                        const matchedRows = oNetData.filter(d => d.YEAR_COURSE.toString() === yr.toString() && d.BUREAU_NAME === bName && (currentSubj === 'ALL' || d.SBJ_NAME === currentSubj));
+                        if (matchedRows.length === 0) return null;
+                        let weightSum = 0;
+                        let totalStd = 0;
+                        matchedRows.forEach(r => {
+                            weightSum += (r.AVG_SCORE * r.STUDENT_CNT);
+                            totalStd += r.STUDENT_CNT;
+                        });
+                        return totalStd > 0 ? (weightSum / totalStd) : null;
+                    });
+                    return {
+                        label: bName.length > 20 ? bName.slice(0, 18) + '...' : bName,
+                        data: dataPoints,
+                        borderColor: colors[idx],
+                        backgroundColor: colors[idx],
+                        tension: 0.1,
+                        fill: false
+                    };
+                });
+            }
+
+            const ctx = document.getElementById('chartHistoricalTrend').getContext('2d');
+            chartsInstance['historicalTrend'] = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: years.map(yr => `ปีการศึกษา ${yr}`),
+                    datasets: datasetToRender
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: { position: 'bottom', labels: { boxWidth: 12, font: { family: 'Sarabun', size: 10 } } },
+                        tooltip: { callbacks: { label: (ctx) => `${ctx.dataset.label}: ${ctx.raw ? ctx.raw.toFixed(2) : 'ไม่มีข้อมูล'} คะแนน` } }
+                    },
+                    scales: {
+                        x: { ticks: { font: { family: 'Sarabun' } } },
+                        y: { min: 20, max: 85, ticks: { font: { family: 'Sarabun' } }, title: { display: true, text: 'คะแนนเฉลี่ย', font: { family: 'Sarabun' } } }
+                    }
+                }
+            });
+        }
+
+        // 3. Educational Diagnostics & Automated Insights
+        function updateEducationalDiagnostics() {
+            if (filteredData.length === 0) {
+                document.getElementById('diagnoseCriticalArea').textContent = "ไม่มีข้อมูลในขณะนี้";
+                document.getElementById('diagnosePainpoint').textContent = "ไม่มีข้อมูลในขณะนี้";
+                document.getElementById('diagnoseRecommendation').textContent = "ไม่มีข้อมูลในขณะนี้";
                 return;
             }
 
-            let score = 0;
-            const q1 = document.querySelector('input[name="q1"]:checked');
-            const q2 = document.querySelector('input[name="q2"]:checked');
-            const q3 = document.querySelector('input[name="q3"]:checked');
+            // Find lowest scoring rows inside current filtered set
+            let lowestAvgRow = filteredData[0];
+            filteredData.forEach(r => {
+                if (r.AVG_SCORE < lowestAvgRow.AVG_SCORE) {
+                    lowestAvgRow = r;
+                }
+            });
 
-            if(!q1 || !q2 || !q3) {
-                alert('น้องๆ ยังทำข้อสอบไม่ครบทุกข้อเลยครับ ตรวจสอบอีกครั้งนะ 😊');
-                return;
-            }
-
-            if(q1.value === 'correct') score++;
-            if(q2.value === 'correct') score++;
-            if(q3.value === 'correct') score++;
-
-            // บันทึกคะแนนลง Local Storage
-            localStorage.setItem('quiz_score', score);
-
-            // แสดงผลตรวจแบบฝึกหัด
-            const resultBox = document.getElementById('quiz-result');
-            resultBox.style.display = 'block';
+            // Diagnosis: Critical Area
+            const criticalSbj = lowestAvgRow.SBJ_NAME;
+            const criticalBur = lowestAvgRow.BUREAU_NAME;
+            const critPassPct = (estimatePassRate(lowestAvgRow.AVG_SCORE, lowestAvgRow.SD_SCORE) * 100).toFixed(1);
             
-            let passedText = score >= 2 ? '<span style="color:var(--secondary-color)">ผ่านเกณฑ์ขั้นต่ำ (ได้ร้อยละ ๖๐ ขึ้นไป)</span>' : '<span style="color:var(--danger-color)">ไม่ผ่านเกณฑ์ พยายามใหม่อีกครั้งนะเด็กๆ</span>';
-            
-            resultBox.innerHTML = `
-                <h4>📊 ผลการทดสอบของน้อง ${name}</h4>
-                <p>ได้คะแนนสะสม: <strong>${score} / 3</strong> คะแนน</p>
-                <p>ประเมินผล: ${passedText}</p>
-                <p style="font-size:0.9rem; color:#666; margin-top:0.5rem;">ระบบบันทึกคะแนนข้อสอบในสมุดพกเรียบร้อยแล้วจ้า!</p>
+            document.getElementById('diagnoseCriticalArea').innerHTML = `
+                วิชา <strong class="text-rose-700">${criticalSbj}</strong> 
+                สังกัด <strong class="text-rose-700">${criticalBur}</strong> 
+                เนื่องจากได้คะแนนเฉลี่ยเพียง <strong class="text-rose-700">${lowestAvgRow.AVG_SCORE.toFixed(2)}</strong> คะแนน 
+                และมีนักเรียนสอบผ่านเกณฑ์ 50% เพียงประมาณ <strong class="text-rose-700">${critPassPct}%</strong> เท่านั้น
             `;
-            
-            alert(`ทำแบบฝึกหัดเสร็จสิ้น! ได้คะแนน ${score}/3 คะแนน`);
-        }
 
-        // ระบบเกมล่าขุมทรัพย์คำพ้อง
-        function initGame() {
-            gameScore = 0;
-            document.getElementById('game-score').innerText = gameScore;
-            
-            let highscore = localStorage.getItem('game_highscore') || 0;
-            document.getElementById('game-highscore').innerText = highscore;
-            
-            currentGameIndex = 0;
-            nextGameWord();
-        }
-
-        function nextGameWord() {
-            if(currentGameIndex >= gameData.length) {
-                // วนกลับมาเริ่มต้นใหม่หากเล่นจนจบข้อมูลคลังคำ
-                currentGameIndex = 0;
+            // Diagnosis: Painpoint description
+            let painpointText = "";
+            if (criticalSbj === "คณิตศาสตร์" || criticalSbj === "ภาษาอังกฤษ") {
+                painpointText = `ปัญหาหลักเกิดจากวิชา <strong>${criticalSbj}</strong> มีค่าเบี่ยงเบนมาตรฐาน (SD: ${lowestAvgRow.SD_SCORE.toFixed(1)}) ค่อนข้างสูง สะท้อนถึง <strong>"ความเหลื่อมล้ำทางการเรียนรู้ขั้นรุนแรง"</strong> ภายในสังกัดเดียวกัน มีเด็กกลุ่มเก่งที่ได้คะแนนสูงสุดเกือบเต็มร้อย แต่เด็กกลุ่มล่างเป็นจำนวนมากที่กองอยู่ที่คะแนนฐานต่ำ (Floor Effect)`;
+            } else {
+                painpointText = `วิชา <strong>${criticalSbj}</strong> มีระดับคะแนนเฉลี่ยที่ชะลอตัวลงอย่างมีนัยสำคัญ โดยเฉพาะอย่างยิ่งในปีหลังๆ สะท้อนถึงการขาดแคลนทรัพยากรการเรียนการสอน หรือการปรับเนื้อหาหลักสูตรตามโครงสร้างข้อสอบ O-NET แนวใหม่ไม่ทันเวลา`;
             }
-            const currentItem = gameData[currentGameIndex];
-            document.getElementById('current-word').innerText = currentItem.word;
-            document.getElementById('current-hint').innerText = currentItem.hint;
+            document.getElementById('diagnosePainpoint').innerHTML = painpointText;
+
+            // Policy Recommendation
+            let recommendationText = "";
+            if (criticalSbj === "คณิตศาสตร์") {
+                recommendationText = `1. <strong>จัดลำดับความสำคัญ (Targeted Intervention):</strong> พัฒนาคลังสื่อการสอนคณิตศาสตร์แบบปฏิสัมพันธ์ (Interactive Math) ให้โรงเรียนในพื้นที่ห่างไกล<br>
+                                      2. <strong>เน้นทักษะประยุกต์:</strong> ลดการเรียนคณิตศาสตร์แบบท่องจำสูตร และปรับมาเน้นทักษะการคิดเชิงตรรกะและการวิเคราะห์โจทย์ชีวิตจริงตามกรอบ PISA`;
+            } else if (criticalSbj === "ภาษาอังกฤษ") {
+                recommendationText = `1. <strong>ยกระดับทักษะครูผู้สอน:</strong> เร่งอบรมครูสอนภาษาอังกฤษด้วยมาตรฐาน CEFR อย่างเป็นระบบ<br>
+                                      2. <strong>การเรียนรู้เชิงรุก (Active Learning):</strong> นำแอปพลิเคชันสอนภาษาอังกฤษ AI-powered เข้ามาช่วยลดช่องว่างด้านการออกเสียงและการเรียนรู้คำศัพท์สำหรับโรงเรียนขาดแคลน`;
+            } else {
+                recommendationText = `1. <strong>กระจายทรัพยากรผู้เชี่ยวชาญ:</strong> สร้างภาคีเครือข่ายความร่วมมือการแบ่งปันข้อสอบและสื่อการสอนระหว่างกลุ่มโรงเรียนวิทยาศาสตร์หรือโรงเรียนสาธิต ไปยังโรงเรียนทั่วไปในสังกัด สพฐ. และ อปท.`;
+            }
+            document.getElementById('diagnoseRecommendation').innerHTML = recommendationText;
         }
 
-        function checkGameAnswer(playerChoice) {
-            const name = localStorage.getItem('student_name');
-            if(!name) {
-                alert('กรุณาลงทะเบียนที่หน้าแรกก่อนร่วมสนุกเล่นเกมนะครับ');
-                showPage('home');
+        // 4. Render Details Data Table
+        function renderDataTable() {
+            const tbody = document.getElementById('dataTableBody');
+            tbody.innerHTML = '';
+
+            if (filteredData.length === 0) {
+                tbody.innerHTML = `<tr><td colspan="8" class="text-center py-8 text-slate-400">ไม่พบข้อมูลที่ค้นหาตามเงื่อนไขตัวกรอง</td></tr>`;
                 return;
             }
 
-            const currentItem = gameData[currentGameIndex];
-            if(playerChoice === currentItem.type) {
-                gameScore += 10;
-                alert('🎉 เก่งมากจ้า! ตอบถูกรับไป 10 คะแนน');
-            } else {
-                alert('😢 น่ายังไม่ถูกนะจ๊ะ ลองศึกษาจากคำใบ้อีกทีน้า');
-            }
+            // Sort data by Year (Desc), Average Score (Desc)
+            const sorted = [...filteredData].sort((a, b) => {
+                if (b.YEAR_COURSE !== a.YEAR_COURSE) return b.YEAR_COURSE - a.YEAR_COURSE;
+                return b.AVG_SCORE - a.AVG_SCORE;
+            });
 
-            document.getElementById('game-score').innerText = gameScore;
+            sorted.forEach(row => {
+                const tr = document.createElement('tr');
+                tr.className = 'hover:bg-slate-50/80 transition-colors';
 
-            // ตรวจสอบและบันทึกคะแนนสูงสุด (High Score) ลงคลังคอมพิวเตอร์เครื่องนี้
-            let currentHighScore = parseInt(localStorage.getItem('game_highscore') || 0);
-            if(gameScore > currentHighScore) {
-                localStorage.setItem('game_highscore', gameScore);
-                document.getElementById('game-highscore').innerText = gameScore;
-            }
+                const passPct = (estimatePassRate(row.AVG_SCORE, row.SD_SCORE) * 100).toFixed(1);
+                const passClass = passPct >= 50 ? 'text-emerald-600 font-semibold' : 'text-rose-600';
 
-            currentGameIndex++;
-            nextGameWord();
+                tr.innerHTML = `
+                    <td class="py-3 px-6 font-medium text-slate-600">${row.YEAR_COURSE}</td>
+                    <td class="py-3 px-6 text-slate-900 font-medium">${row.BUREAU_NAME}</td>
+                    <td class="py-3 px-6">
+                        <span class="inline-flex items-center px-2 py-0.5 rounded-md text-xs font-medium bg-slate-100 text-slate-800">
+                            ${row.SBJ_NAME}
+                        </span>
+                    </td>
+                    <td class="py-3 px-6 text-right font-mono">${row.STUDENT_CNT.toLocaleString()}</td>
+                    <td class="py-3 px-6 text-right font-bold text-slate-900">${row.AVG_SCORE.toFixed(2)}</td>
+                    <td class="py-3 px-6 text-right font-mono text-slate-500">${row.SD_SCORE ? row.SD_SCORE.toFixed(2) : '-'}</td>
+                    <td class="py-3 px-6 text-right font-mono text-xs text-slate-400">
+                        Min: ${row.MIN_SCORE} / Max: ${row.MAX_SCORE}
+                    </td>
+                    <td class="py-3 px-6 text-right ${passClass}">
+                        ${passPct}%
+                    </td>
+                `;
+                tbody.appendChild(tr);
+            });
         }
 
-        // โหลดข้อมูลเข้าสู่หน้าสมุดพกผลการเรียน (Report)
-        function loadReport() {
-            const name = localStorage.getItem('student_name');
-            const no = localStorage.getItem('student_no');
-            const quizScore = localStorage.getItem('quiz_score');
-            const gameHighScore = localStorage.getItem('game_highscore') || 0;
-            const teacherNote = localStorage.getItem('teacher_note') || '';
+        // Export active filtered table to CSV format
+        function exportToCsv() {
+            if (filteredData.length === 0) return;
 
-            if(name && no) {
-                document.getElementById('report-empty').style.display = 'none';
-                document.getElementById('report-content').style.display = 'block';
+            let csvContent = "data:text/csv;charset=utf-8,";
+            csvContent += "YEAR_COURSE,BUREAU_NAME,SBJ_NAME,STUDENT_CNT,AVG_SCORE,SD_SCORE,MIN_SCORE,MAX_SCORE,ESTIMATED_PASS_PERCENT\n";
 
-                document.getElementById('rep-name').innerText = name;
-                document.getElementById('rep-no').innerText = no;
-                document.getElementById('rep-quiz').innerText = quizScore !== null ? `${quizScore} / 3 คะแนน` : 'ยังไม่ได้ลงมือทำแบบฝึกหัด';
-                document.getElementById('rep-game').innerText = gameHighScore;
-                document.getElementById('teacher-note').value = teacherNote;
-            } else {
-                document.getElementById('report-empty').style.display = 'block';
-                document.getElementById('report-content').style.display = 'none';
-            }
-        }
+            filteredData.forEach(row => {
+                const passPct = (estimatePassRate(row.AVG_SCORE, row.SD_SCORE) * 100).toFixed(1);
+                const line = [
+                    row.YEAR_COURSE,
+                    `"${row.BUREAU_NAME}"`,
+                    `"${row.SBJ_NAME}"`,
+                    row.STUDENT_CNT,
+                    row.AVG_SCORE.toFixed(4),
+                    row.SD_SCORE ? row.SD_SCORE.toFixed(4) : 0,
+                    row.MIN_SCORE,
+                    row.MAX_SCORE,
+                    passPct
+                ].join(",");
+                csvContent += line + "\n";
+            });
 
-        // บันทึกโน้ตของคุณครูลง Local Storage
-        function saveTeacherNote() {
-            const noteValue = document.getElementById('teacher-note').value;
-            localStorage.setItem('teacher_note', noteValue);
+            const encodedUri = encodeURI(csvContent);
+            const link = document.createElement("a");
+            link.setAttribute("href", encodedUri);
+            link.setAttribute("download", `onet_m3_filtered_report_${Date.now()}.csv`);
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
         }
     </script>
 </body>
